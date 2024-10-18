@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { success, Warning, initMessageApi } from './Alerts'
+import {initMessageApi } from './Alerts'
 import MoveHistory from './MoveHistory'
 import Information from './Information'
 import Information2 from './Information2'
@@ -9,37 +9,37 @@ import { message } from 'antd';
 import Board from './Board'
 import { handleRoomConnection } from './Utils'
 import Chat from './Chat'
-import { LosserModal } from './Modals'
 import GameResult from './GameResult'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 import { setOppName, setPlayer, setRoomCode, setUserName } from '@/lib/features/room/roomSlice'
 import Notification from './Notification'
 
 const GameLayout: React.FC = () => {
-  const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
-  const [playerChar, setPlayerChar] = useState();
-  const [messageApi, contextHolder] = message.useMessage();
+  const dispatch = useAppDispatch();
   dispatch(setOppName("Waiting to Join"));
   dispatch(setUserName(searchParams.get('name')));
+  dispatch(setRoomCode(searchParams.get('roomcode')))
+  const isHost = searchParams.get('type') === 'CREATE_ROOM'
   const player = useAppSelector((state) => state.room.player)
   const userName = useAppSelector((state) => state.room.userName);
-  const [isHost, setIsHost] = useState(searchParams.get('type') === 'CREATE_ROOM')
-  dispatch(setRoomCode(searchParams.get('roomcode')))
   const roomCode = useAppSelector((state) => state.room.roomCode);
-  const [connection, setConnection] = useState(false)   //First Time Link Join call createRoom
+  
+  const [messageApi, contextHolder] = message.useMessage();
+  const [playerChar, setPlayerChar] = useState<'A'|'B'|'C'>('C');
+  const [connection, setConnection] = useState<boolean>(false)   
   useEffect(() => {
     // Initialize the global messageApi
     initMessageApi(messageApi);
     async function roomConnection() {
-      const isConnection = await handleRoomConnection(isHost, userName, roomCode)
+      const isConnection:boolean = await handleRoomConnection(isHost, userName, roomCode) || false
       if (isConnection) {
         setPlayerChar(searchParams.get('type') === 'CREATE_ROOM' ? 'A' : 'B')
       }
       setConnection(isConnection)
     }
     roomConnection()
-  }, []);
+  }, [isHost,searchParams,messageApi, roomCode, userName]);
   if (connection === false) {
     return (
       <div>Loading</div>

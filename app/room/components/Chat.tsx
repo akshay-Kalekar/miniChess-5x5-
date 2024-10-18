@@ -1,9 +1,12 @@
 import { onValue, ref, set } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
 import { database } from '../firebase/database'
-
-const Chat = ({ player, roomCode }) => {
-    const [messages, setMessages] = useState([])
+interface ChatProps {
+    player: string
+    roomCode: string
+}
+const Chat:React.FC<ChatProps> = ({ player, roomCode }) => {
+    const [messages, setMessages] = useState<{ message: string, sender: string }[]>([])
     const [newMessage, setNewMessage] = useState('')
 
     const sendMessage = () => {

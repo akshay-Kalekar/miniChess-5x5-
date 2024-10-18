@@ -4,9 +4,14 @@ import copy from '@/app/assets/copy-icon.svg'
 import check from '@/app/assets/check.png'
 import Image from 'next/image'
 import { useAppSelector } from '@/lib/hooks'
-import { ResignationModal } from './Modals'
-
-const Information = ({userName,roomCode}) => {
+import { setNotification } from '@/lib/features/game/gameSlice'
+import { useAppDispatch } from '@/lib/hooks'
+interface  InformationProps {
+  userName: string
+  roomCode: string
+}
+const Information = ({userName,roomCode}: InformationProps) => {
+  const dispatch = useAppDispatch();
   const myPiece = useAppSelector((state)=>state.game.myPiece)
   const [copied,setCopied] = useState(copy);
   useEffect(()=>{
@@ -35,8 +40,7 @@ const Information = ({userName,roomCode}) => {
   
     <div className="stat hover:text-red-500  ">
       <div className="stat-title"></div>
-      <div className="stat-value " onClick={()=>document.getElementById('resignation_modal').showModal()}>Resign</div>
-      <ResignationModal />
+      <div className="stat-value " onClick={()=>dispatch(setNotification("resignation"))}>Resign</div>
     </div>
     
   </div>

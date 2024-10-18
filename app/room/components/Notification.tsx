@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ConfirmationModal, DrawPermissionModal, RematchPermissionModal } from './Modals';
+import { ConfirmationModal, DrawPermissionModal, RematchPermissionModal, ResignationModal } from './Modals';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { onValue, ref } from 'firebase/database';
 import { setNotification } from '@/lib/features/game/gameSlice';
-import { message } from 'antd';
 import { database } from '../firebase/database';
 import { error } from './Alerts';
 
@@ -49,7 +48,7 @@ const Notification = () => {
       {/* Handle draw request */}
       {gameOver === "NotOver" && notification === "drawRequest" && (
         <>
-          {(request.response === "Yes" || request.response==="No" || request.response==="") && <ConfirmationModal text="drawRequest" />}
+          {(request.response === "Yes" || request.response==="No" || request.response==="") && <ConfirmationModal message="drawRequest" />}
           {player === request.to && request.response==="Waiting for Response" && <DrawPermissionModal />}
         </>
       )}
@@ -57,10 +56,11 @@ const Notification = () => {
       {/* Handle rematch request */}
       {notification === "rematchRequest" && (
         <>
-          {(request.response === "Yes" || request.response==="No" || !request.response) && <ConfirmationModal text="rematchRequest" />}
+          {(request.response === "Yes" || request.response==="No" || !request.response) && <ConfirmationModal message="rematchRequest" />}
           {request.message === "rematchRequest" && request.response==="Waiting for Response" && player === request.to && <RematchPermissionModal />}
         </>
       )}
+      {notification === "resignation" && <ResignationModal/>}
     </>
   );
 };

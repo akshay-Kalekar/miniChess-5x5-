@@ -1,13 +1,14 @@
-import { update } from 'firebase/database';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { updateGameResult,updateGameRequest, resetRoom } from './GameLogic';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { setNotification } from '@/lib/features/game/gameSlice';
 
-
-const WinnerModal = ({ player, message = "" }) => {
-  const router = useRouter();
+interface WinnerModalProps {
+  player: string;
+  message?: string;
+}
+const WinnerModal = ({ player, message = "" }:WinnerModalProps) => {
   return (
     <dialog id="winner_modal" className="modal" open>
       <div className="modal-box">
@@ -24,7 +25,11 @@ const WinnerModal = ({ player, message = "" }) => {
   );
 };
 
-const LoserModal = ({ player = "aks", oppName = "hero" }) => {
+interface LoserModalProps {
+  player: string;
+  oppName: string;
+}
+const LoserModal = ({ player = "aks", oppName = "hero" }:LoserModalProps) => {
   const router = useRouter();
   return (
     <dialog id="loser_modal" className="modal z-20" open>
@@ -45,7 +50,7 @@ const LoserModal = ({ player = "aks", oppName = "hero" }) => {
   );
 };
 
-const DrawModal = ({ player}) => {
+const DrawModal = ({player}:{player:string}) => {
   return (
     <dialog id="winner_modal" className="modal" open>
       <div className="modal-box">
@@ -77,27 +82,26 @@ const RematchModal = () => {
     </dialog>
   );
 };
-const 
-ConfirmationModal = ({text}) => {
+const ConfirmationModal = ({message}:{message:string}) => {
   const dispatch = useAppDispatch();
-  console.log(text,"confirmation - modal")
+  console.log(message,"confirmation - modal")
   const roomCode = useAppSelector((state) => state.room.roomCode);
   const player = useAppSelector((state) => state.room.player);
-  let message;
-  if(text==="drawRequest"){
-      message = "Do you want to draw?";
+  let text;
+  if(message==="drawRequest"){
+      text = "Do you want to draw?";
   }
-  else if(text==="rematchRequest"){
-      message = "Do you want to request for rematch?";
+  else if(message==="rematchRequest"){
+      text = "Do you want to request for rematch?";
   }
   return (
     <dialog id="confirmation_modal" className="modal" open>
       <div className="modal-box">
         <h3 className="font-bold text-lg">Confirmation</h3>
-        <p className="py-4">{message}</p>
+        <p className="py-4">{text}</p>
         <div className="modal-action">
           <form method="dialog">
-            <button className="btn" onClick={()=>{updateGameRequest(roomCode,player,text); dispatch(setNotification("")) ;
+            <button className="btn" onClick={()=>{updateGameRequest({roomCode,player,message}); dispatch(setNotification("")) ;
             }} >Yes</button>
             <button className="btn" onClick={()=>dispatch(setNotification(""))}>No</button>
           </form>
@@ -118,8 +122,8 @@ const DrawPermissionModal = () => {
         <p className="py-4">Do you want to accept a draw?</p>
         <div className="modal-action">
           <form method="dialog">
-            <button className="btn" onClick={()=>{updateGameRequest(roomCode,player,"drawRequest","Yes"); updateGameResult(roomCode,player,"drawRequest"); dispatch(setNotification("")); }}>Accept</button>
-            <button className="btn" onClick={()=>{updateGameRequest(roomCode,player,"drawRequest","No"); dispatch(setNotification("")); }}>Reject</button>
+            <button className="btn" onClick={()=>{updateGameRequest({roomCode,player,message:"drawRequest",response:"Yes"}); updateGameResult({roomCode,player,gameOver:"drawRequest"}); dispatch(setNotification("")); }}>Accept</button>
+            <button className="btn" onClick={()=>{updateGameRequest({roomCode,player,message:"drawRequest",response:"No"}); dispatch(setNotification("")); }}>Reject</button>
           </form>
         </div>
       </div>
@@ -137,8 +141,8 @@ const RematchPermissionModal = () => {
         <p className="py-4">Do you want to accept a rematch?</p>
         <div className="modal-action">
           <form method="dialog">
-            <button className="btn" onClick={()=>{updateGameRequest(roomCode,player,"rematchRequest","Yes"); resetRoom(roomCode); dispatch(setNotification(""))}}>Accept</button>
-            <button className="btn" onClick={()=>{updateGameRequest(roomCode,player,"rematchRequest","No"); dispatch(setNotification(""));}}>Reject</button>
+            <button className="btn" onClick={()=>{updateGameRequest({roomCode,player,message:"rematchRequest",response:"Yes"}); resetRoom(roomCode); dispatch(setNotification(""))}}>Accept</button>
+            <button className="btn" onClick={()=>{updateGameRequest({roomCode,player,message:"rematchRequest",response:"No"}); dispatch(setNotification(""));}}>Reject</button>
           </form>
         </div>
       </div>
@@ -148,6 +152,7 @@ const RematchPermissionModal = () => {
 
 
 const ResignationModal = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const roomCode = useAppSelector((state) => state.room.roomCode);
   const player = useAppSelector((state) => state.room.player);
@@ -160,13 +165,14 @@ const ResignationModal = () => {
         <div className="modal-action">
           <form method="dialog">
             <button className="btn" onClick={ async () =>{
-              await updateGameResult(roomCode,player,'Resignation');
+              await updateGameResult({roomCode,player,gameOver:'Resignation'});
               router.push('/')
               
             }
 
             }>Yes</button>
-            <button className="btn">No</button>
+            <button className="btn" onClick={()=>dispatch(setNotification(""))}>No</button>
+
           </form>
         </div>
       </div>

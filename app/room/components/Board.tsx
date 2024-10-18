@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { FC } from "react";
 import { movePiece, selectPiece } from "./Utils";
-import { onValue, ref, set } from "firebase/database";
+import { onValue, ref, } from "firebase/database";
 import { database } from "../firebase/database";
 import { updateRoom } from "./GameLogic";
 import { error } from "./Alerts";
@@ -11,15 +11,15 @@ import { setGameOver, setMyPiece, setOppPiece, setResult,setTurn } from "@/lib/f
 import { setMoveHistory } from "@/lib/features/game/gameSlice";
 import { setOppName } from "@/lib/features/room/roomSlice";
 interface BoardInterface {
-  roomCode: string; // Changed to properly define roomCode
-  player: string; // Changed to properly define player
+  roomCode: string; 
+  player: string; 
 }
 
 const Board: FC<BoardInterface> = ({ roomCode, player }) => {
   const dispatch = useAppDispatch();
   const turn = useAppSelector((state)=>state.game.turn)
   const moveHistory = useAppSelector((state)=>state.game.moveHistory) ;
-  const [selectedPiece, setSelectedPiece] = useState({
+  const [selectedPieceInfo, setSelectedPieceInfo] = useState({
     piece: "",
     pos_x: -1,
     pos_y: -1,
@@ -41,37 +41,34 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
   const [myTurn, setMyTurn] = useState(turn === player);
   const myPiece = useAppSelector((state)=>state.game.myPiece)
   const oppPiece = useAppSelector((state)=>state.game.oppPiece)
-  const handleMovePiece = (e, rowIndex, colIndex) => {
-    let playerAP;
-    let playerBP;
-    playerAP = myPiece;
-    playerBP = oppPiece;
+  const handleMovePiece = (e:React.MouseEvent, rowIndex:number, colIndex:number) => {
+    const playerAP = myPiece;
+    let playerBP=oppPiece;
     if (
       possibleMoveLayout[rowIndex][colIndex] === "-1" 
     ) {
       playerBP = playerBP - 1;
     }
-    const mH = moveHistory?[...moveHistory]:[]
-    mH.push(`${selectedPiece.piece} moved [${selectedPiece.pos_x},${selectedPiece.pos_y}] ~> [${rowIndex}, ${colIndex}]`)
-    const successfulMove = movePiece(
-      e,
-      rowIndex,
-      colIndex,
-      selectedPiece,
-      layout,
-      setLayout,
-      setSelectedPiece,
-      possibleMoveLayout,
-      setPossibleMoveLayout
+    const mH:string[] = moveHistory? [...moveHistory] : [];
+    mH.push(`${selectedPieceInfo.piece} moved [${selectedPieceInfo.pos_x},${selectedPieceInfo.pos_y}] ~> [${rowIndex}, ${colIndex}]`)
+    const successfulMove = movePiece({
+      move_x:rowIndex,
+      move_y:colIndex,
+      selectedPieceInfo:selectedPieceInfo,
+      layout:layout,
+      setLayout:setLayout,
+      setSelectedPieceInfo:setSelectedPieceInfo,
+      possibleMoveLayout:possibleMoveLayout,
+      setPossibleMoveLayout:setPossibleMoveLayout}
     );
 
     if (successfulMove) {
-      const updatedLayout = [...layout]; // This is the layout after the move
+      const updatelayout = [...layout]; // This is the layout after the move
       if(player==='A'){
-        updateRoom(roomCode, updatedLayout, turn, playerAP, playerBP,mH);
+        updateRoom({roomCode, updatelayout, turn, pieceA:playerAP, pieceB:playerBP,mH});
       }
       else if(player=='B'){
-        updateRoom(roomCode, updatedLayout, turn, playerBP, playerAP,mH);
+        updateRoom({roomCode, updatelayout, turn, pieceA:playerBP, pieceB:playerAP,mH});
       }     
       dispatch(setMyPiece(playerAP));
       dispatch(setOppPiece(playerBP));
@@ -82,6 +79,7 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
 
   useEffect(() => {
     const roomRef = ref(database, `rooms/${roomCode}`);
+    console.log("roomRef");
     const unsubscribe = async () =>
       await onValue(roomRef, (snapshot) => {
         const data = snapshot.val();
@@ -127,7 +125,7 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
               data-y={colIndex}
               className={`border-2 border-white w-28 h-28 text-center flex items-center justify-center flex-row-reverse
                 ${
-                  cell === selectedPiece.piece && cell !== ""
+                  cell === selectedPieceInfo.piece && cell !== ""
                     ? "bg-gray-600"
                     : ""
                 }
@@ -140,15 +138,15 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
                 }
                 ${myTurn && player === cell[0] ? "text-green-400" : ""}`}
               onClick={(e) =>
-                selectedPiece.piece === ""
+                selectedPieceInfo.piece === ""
                   ? selectPiece(
-                      e,
-                      selectedPiece,
+                      {e,
+                      selectedPieceInfo,
                       player,
                       myTurn,
                       layout,
-                      setSelectedPiece,
-                      setPossibleMoveLayout
+                      setSelectedPieceInfo,
+                      setPossibleMoveLayout}
                     )
                   : handleMovePiece(e, rowIndex, colIndex)
               }

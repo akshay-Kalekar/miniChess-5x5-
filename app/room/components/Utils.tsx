@@ -35,7 +35,7 @@ const handleRoomConnection = async ( isHost:boolean,userName:string,roomCode:str
 
     if(isHost===true){
         console.log("Create Room")
-        const roomCreated = await createRoom(roomCode,userName)
+        const roomCreated = await createRoom({roomCode,playerName:userName})
         console.log(roomCreated)
         if(roomCreated==='Room Created'){
             success("Room Created")
@@ -47,7 +47,7 @@ const handleRoomConnection = async ( isHost:boolean,userName:string,roomCode:str
         }
     }
     else if(isHost===false){
-        const roomJoined = await joinRoom(roomCode,userName)
+        const roomJoined = await joinRoom({roomCode,playerName:userName})
         if(roomJoined==='Room Joined'){
             success("Room Joined")
             return true;
@@ -92,27 +92,47 @@ const moveHelper =(selectedPieceInfo:selectedPieceInfoInterface,layout:Array<Arr
     return newLayout;
 }
 //Selecting a piece and showing possible moves
-const selectPiece = (e, selectedPieceInfo, player, myTurn, layout, setSelectedPiece, setPossibleMoveLayout) => {
-    const piece = e.target.textContent;
+interface SelectPieceProps {
+    e: React.MouseEvent<HTMLElement>;
+    selectedPieceInfo: selectedPieceInfoInterface;
+    player: string;
+    myTurn: boolean;
+    layout: Array<Array<string>>;
+    setSelectedPieceInfo: React.Dispatch<React.SetStateAction<selectedPieceInfoInterface>>;
+    setPossibleMoveLayout: React.Dispatch<React.SetStateAction<Array<Array<string>>>>;
+}
+const selectPiece = ({e, selectedPieceInfo, player, myTurn, layout, setSelectedPieceInfo, setPossibleMoveLayout}: SelectPieceProps) => {
+    const target = e.target as HTMLElement;
+    const piece = target.textContent;
     
-    if (selectedPieceInfo.piece === "" && myTurn && ((player === "A" && piece.startsWith("A")) || (player === "B" && piece.startsWith("B")))) {
+
+    if (selectedPieceInfo.piece === "" && myTurn && piece && ((player === "A" && piece.startsWith("A")) || (player === "B" && piece.startsWith("B")))) {
         const newSelectedPieceInfo = {
             piece,
-            pos_x: Number(e.target.dataset.x),
-            pos_y: Number(e.target.dataset.y),
+            pos_x: Number(target.dataset.x),
+            pos_y: Number(target.dataset.y),
         };
-        
         const newLayout = moveHelper(newSelectedPieceInfo, layout);
-        setSelectedPiece(newSelectedPieceInfo); 
+        setSelectedPieceInfo(newSelectedPieceInfo); 
         setPossibleMoveLayout(newLayout); 
     } else {
         error("Wrong Click");
-        setSelectedPiece({ piece: "", pos_x: -1, pos_y: -1 }); // Reset selected piece
+        setSelectedPieceInfo({ piece: "", pos_x: -1, pos_y: -1 }); // Reset selected piece
         setPossibleMoveLayout([["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""]]); // Reset possible move layout
     }
-};
-// Make a move or not
-const movePiece = (e, move_x,move_y,selectedPieceInfo, layout, setLayout, setSelectedPiece,possibleMoveLayout,setPossibleMoveLayout) => {
+
+};// Make a move or not
+interface MovePieceProps {
+    move_x: number;
+    move_y: number;
+    selectedPieceInfo: selectedPieceInfoInterface;
+    layout: Array<Array<string>>;
+    setLayout: React.Dispatch<React.SetStateAction<Array<Array<string>>>>;
+    setSelectedPieceInfo: React.Dispatch<React.SetStateAction<selectedPieceInfoInterface>>;
+    possibleMoveLayout: Array<Array<string>>;
+    setPossibleMoveLayout: React.Dispatch<React.SetStateAction<Array<Array<string>>>>;
+}
+const movePiece = ({move_x,move_y,selectedPieceInfo, layout, setLayout, setSelectedPieceInfo,possibleMoveLayout,setPossibleMoveLayout}: MovePieceProps) => {
     if (selectedPieceInfo.piece !== "") {
         console.log("Made Move")
         const x = move_x;
@@ -122,7 +142,7 @@ const movePiece = (e, move_x,move_y,selectedPieceInfo, layout, setLayout, setSel
             newLayout[selectedPieceInfo.pos_x][selectedPieceInfo.pos_y] = "";
             newLayout[x][y] = selectedPieceInfo.piece;
             setLayout(newLayout);
-            setSelectedPiece({ piece: "", pos_x: -1, pos_y: -1 });    
+            setSelectedPieceInfo({ piece: "", pos_x: -1, pos_y: -1 });    
             setPossibleMoveLayout([["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""], ["", "", "", "", ""]]);
             return true;
         }

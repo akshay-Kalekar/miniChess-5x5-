@@ -1,0 +1,23 @@
+{
+  "hosting": {
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "asia-east1"
+    }
+  },
+  "environment": {
+    "NEXT_PUBLIC_FIREBASE_API_KEY":"AIzaSyD76lHwE3CbpFhnl7fFxKt8uJXzmDFWPMk",
+    "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN":   "minichess-aeead.firebaseapp.com",
+    "NEXT_PUBLIC_FIREBASE_DATABASE_URL":"https://minichess-aeead-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "NEXT_PUBLIC_FIREBASE_PROJECT_ID":"minichess-aeead",
+    "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET":"minichess-aeead.appspot.com",
+    "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID":"837796339599",
+    "NEXT_PUBLIC_FIREBASE_APP_ID":"1:837796339599:web:7a8ff95b5aaf32388d75fa",
+    "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID":"G-H9587ZYY81"
+    }
+}
