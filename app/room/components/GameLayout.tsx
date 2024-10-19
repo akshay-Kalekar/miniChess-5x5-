@@ -60,9 +60,9 @@ const GameLayout: React.FC = () => {
       <GameResult />
       <Notification/>
       <div className='flex gap-2 justify-around h-[75vh] items-center p-10'>
-        <div className='h-full w-4/12 '><MoveHistory /></div>
+        <div className='hidden sm:block h-full w-4/12 '><MoveHistory /></div>
         <div className='h-full w-8/12'><Board roomCode={roomCode} player={player}  /></div>
-        <div className='h-full w-4/12 '><Chat roomCode={roomCode} player={player} /></div>
+        <div className='hidden sm:block h-full w-4/12 '><Chat roomCode={roomCode} player={player} /></div>
         <div />
       </div>
       <Information2 />

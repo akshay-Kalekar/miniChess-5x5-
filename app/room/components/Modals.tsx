@@ -158,7 +158,7 @@ const ResignationModal = () => {
   const player = useAppSelector((state) => state.room.player);
 
   return (
-    <dialog id="resignation_modal" className="modal text-white" >
+    <dialog id="resignation_modal" className="modal text-white" open>
       <div className="modal-box">
         <h3 className="font-bold text-lg">Resignation</h3>
         <p className="py-4">Do you want to resign?</p>

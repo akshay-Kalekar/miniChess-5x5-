@@ -147,7 +147,6 @@ const movePiece = ({move_x,move_y,selectedPieceInfo, layout, setLayout, setSelec
             return true;
         }
         else{
-            error("Wrong Move")
             return false;
         }
     }

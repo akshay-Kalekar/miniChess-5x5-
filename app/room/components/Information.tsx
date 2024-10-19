@@ -23,7 +23,7 @@ const Information = ({userName,roomCode}: InformationProps) => {
   },[copied])
   return (
     <>
-    <div className="stats stats-vertical lg:stats-horizontal shadow rounded-sm">
+    <div className="stats stats-vertical sm:stats-horizontal shadow rounded-sm">
     <div className="stat">
       <div className="stat-title">Your Name</div>
       <div className="stat-value">{userName}</div>

@@ -24,6 +24,7 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
     pos_x: -1,
     pos_y: -1,
   });
+  
   const [layout, setLayout] = useState([
     ["", "", "", "", ""],
     ["", "", "", "", ""],
@@ -65,7 +66,7 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
     if (successfulMove) {
       const updatelayout = [...layout]; // This is the layout after the move
       if(player==='A'){
-        updateRoom({roomCode, updatelayout, turn, pieceA:playerAP, pieceB:playerBP,mH});
+       updateRoom({roomCode, updatelayout, turn, pieceA:playerAP, pieceB:playerBP,mH});
       }
       else if(player=='B'){
         updateRoom({roomCode, updatelayout, turn, pieceA:playerBP, pieceB:playerAP,mH});
@@ -85,7 +86,9 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
         const data = snapshot.val();
         console.log("snapshot value : ", data);
         if (data && data.gameState) {
-          setLayout(data.gameState.layout);
+          if (JSON.stringify(data.gameState.layout) !== JSON.stringify(layout)) {
+            setLayout(data.gameState.layout);
+          }
           dispatch(setTurn(data.gameState.turn));
           if(data.gameResult.gameOver !== "NotOver"){
             setMyTurn(false);
@@ -110,12 +113,12 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
     return () => {
       unsubscribe();
     };
-  }, [roomCode]);
+  },[roomCode, player, dispatch, layout]);
   console.log("After Move", layout);
   if(!layout) return <div>Loading...</div>
   return (
     <>
-   
+
       {layout.map((row, rowIndex) => (
         <div key={rowIndex} className="flex  justify-center">
           {row.map((cell, colIndex) => (
@@ -155,7 +158,7 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
             </div>
           ))}
         </div>
-      ))}
+      ))} 
     </>
   );
 };
