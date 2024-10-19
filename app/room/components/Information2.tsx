@@ -11,7 +11,7 @@ const Information2 = () => {
 
   return (
     <>
-    <div className="stats stats-vertical lg:stats-horizontal shadow rounded-sm">
+    <div className="stats stats-horizontal shadow rounded-sm">
     <div className="stat">
       <div className="stat-title">Opponent Name</div>
       <div className="stat-value">{oppName}</div>

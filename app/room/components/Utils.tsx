@@ -106,7 +106,7 @@ const selectPiece = ({e, selectedPieceInfo, player, myTurn, layout, setSelectedP
     const piece = target.textContent;
     
 
-    if (selectedPieceInfo.piece === "" && myTurn && piece && ((player === "A" && piece.startsWith("A")) || (player === "B" && piece.startsWith("B")))) {
+    if ( myTurn && piece && ((player === "A" && piece.startsWith("A")) || (player === "B" && piece.startsWith("B")))) {
         const newSelectedPieceInfo = {
             piece,
             pos_x: Number(target.dataset.x),
