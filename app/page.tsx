@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Option, CodeInput } from "./components/Utils";
+import { RoomOption, CodeInput } from "./components/Utils";
 
 export default function Home() {
   const [buttonOption, setButtonOption] = useState<string>("");
@@ -19,9 +19,10 @@ export default function Home() {
           <div className="flex flex-col  gap-6 justify-center items-center h-[20vh]">
             {/* option work as a toggle b/w two componets all option and on click redirect to single option */}
             {option ? (
-              <Option 
+              <RoomOption 
                 setButtonOption={setButtonOption} 
                 setOption={setOption} 
+                name={name}
                 setName={setName} 
               />
             ) : (

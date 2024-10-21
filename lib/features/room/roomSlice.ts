@@ -1,5 +1,7 @@
 import  { createSlice } from "@reduxjs/toolkit";
 const initialState = {
+    playerAName:"",
+    playerBName:"",
     player: "",
     oppName: "Waiting to Join",
     userName:"",
@@ -11,6 +13,12 @@ const roomSlice = createSlice({
     name:"room",
     initialState,
     reducers:{
+        setPlayerAName:(state,action)=>{
+            state.playerAName = action.payload
+        },
+        setPlayerBName:(state,action)=>{
+            state.playerBName = action.payload
+        },
         setPlayer:(state,action)=>{
             state.player = action.payload
         },
@@ -32,5 +40,5 @@ const roomSlice = createSlice({
     }
 })
 
-export const {setPlayer,setOppName,setUserName,setIsHost,setRoomCode,setConnection} = roomSlice.actions  
+export const {setPlayerAName,setPlayerBName,setPlayer,setOppName,setUserName,setIsHost,setRoomCode,setConnection} = roomSlice.actions  
 export default roomSlice.reducer

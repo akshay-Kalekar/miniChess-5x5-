@@ -1,5 +1,5 @@
 import {ref,set,get,update} from 'firebase/database'
-import {database} from '../firebase/database'
+import {database} from '../../firebase/database'
 
 export const initialGameState =  {
     layout: [
@@ -68,12 +68,12 @@ export const joinRoom = async ({roomCode,playerName}:RoomProps)=>{
     }
 }
 
-export const getRoom = async (roomCode:string)=>{
+export const spectateRoom = async ({roomCode}:{roomCode:string})=>{
     const roomRef = ref(database,`rooms/${roomCode}`);
     const roomSnapshot = await get(roomRef);
     console.log("getRoom",roomSnapshot.val())
     if(roomSnapshot.exists()){
-        return roomSnapshot.val()
+        return "Room joined as Spectator"
     }
     else{
         return "Room Not Found"

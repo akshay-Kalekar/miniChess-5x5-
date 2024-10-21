@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { FC } from "react";
-import { movePiece, selectPiece } from "./Utils";
+import { movePiece, selectPiece } from "../../roomComponents/Utils";
 import { onValue, ref, } from "firebase/database";
-import { database } from "../firebase/database";
+import { database } from "../../firebase/database";
 import { updateRoom } from "./GameLogic";
-import { error } from "./Alerts";
+import { error } from "../../roomComponents/Alerts";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setGameOver, setMyPiece, setOppPiece, setResult,setTurn } from "@/lib/features/game/gameSlice";
 import { setMoveHistory } from "@/lib/features/game/gameSlice";

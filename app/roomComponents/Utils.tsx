@@ -1,5 +1,5 @@
 //On clicking a peice on board show possible moves or trigger error of wrong click
-import { createRoom,joinRoom } from './GameLogic'
+import { createRoom,joinRoom, spectateRoom } from '../playroom/components/GameLogic'
 import { success,error } from './Alerts'
 interface selectedPieceInfoInterface{
     piece:string,
@@ -31,9 +31,9 @@ export const piecesMovementInfo:pieceMovementInfoInterface = {
         'FR': [-2, +2],
     }
 };
-const handleRoomConnection = async ( isHost:boolean,userName:string,roomCode:string)=>{
+const handleRoomConnection = async ( isHost:string,userName:string,roomCode:string)=>{
 
-    if(isHost===true){
+    if(isHost==="CREATE_ROOM"){
         console.log("Create Room")
         const roomCreated = await createRoom({roomCode,playerName:userName})
         console.log(roomCreated)
@@ -42,11 +42,11 @@ const handleRoomConnection = async ( isHost:boolean,userName:string,roomCode:str
             return true;
         }
         else{
-            error("Room Not Created")
+            error("Failed to create room")
             return false;
         }
     }
-    else if(isHost===false){
+    else if(isHost==="JOIN_ROOM"){
         const roomJoined = await joinRoom({roomCode,playerName:userName})
         if(roomJoined==='Room Joined'){
             success("Room Joined")
@@ -56,6 +56,22 @@ const handleRoomConnection = async ( isHost:boolean,userName:string,roomCode:str
             error("Room Not Joined")//Possible error of room not found e.g Match already going on pr No Room Found
             return false;
         }
+    }
+    else if(isHost==="SPECTATE_ROOM"){
+        const roomJoinedSpectator = await spectateRoom({roomCode});
+        if(roomJoinedSpectator === "Room joined as Spectator"){
+            success("Room Joined as Spectator")
+            return true;
+        }
+        else{
+            error("Room Not Joined")//Possible error of room not found e.g Match already going on pr No Room Found
+            return false;
+        }
+        
+    }
+    else{
+        error("Invalid Room")
+        return false;
     }
 }
 const copytext = (roomCode:string)=>{

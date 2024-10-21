@@ -1,17 +1,18 @@
 import { onValue, ref, set } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
 import { database } from '../firebase/database'
+import { useAppSelector } from '@/lib/hooks'
 interface ChatProps {
-    player: string
     roomCode: string
 }
-const Chat:React.FC<ChatProps> = ({ player, roomCode }) => {
+const Chat:React.FC<ChatProps> = ({ roomCode }) => {
+    const {userName} = useAppSelector((state)=>state.room)
     const [messages, setMessages] = useState<{ message: string, sender: string }[]>([])
     const [newMessage, setNewMessage] = useState('')
 
     const sendMessage = () => {
         if (newMessage.trim() === '') return; // Avoid sending empty messages
-        const messageObj = { message: newMessage, sender: player }
+        const messageObj = { message: newMessage, sender: userName }
         const updatedMessages = [messageObj,...messages]
         set(ref(database, `${roomCode}/chat`), {
             message: updatedMessages
@@ -40,7 +41,7 @@ const Chat:React.FC<ChatProps> = ({ player, roomCode }) => {
             <div className='flex flex-col-reverse px-2 '>
 
             {messages.map((message, index) => {
-                if (message.sender === player) {
+                if (message.sender === userName) {
                     return (
                         <div key={index} className='chat chat-end'>
                             <div className="chat-bubble chat-bubble-error">
@@ -52,6 +53,10 @@ const Chat:React.FC<ChatProps> = ({ player, roomCode }) => {
                     return (
                         <div key={index} className='chat chat-start'>
                             <div className="chat-bubble chat-bubble-warning">
+                                <div className='text-xs underline-offset-2 underline text-black/80  tracking-widest '>
+                                    {message.sender}
+                            </div>
+
                                 {message.message}
                             </div>
                         </div>

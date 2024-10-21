@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ConfirmationModal, DrawPermissionModal, RematchPermissionModal, ResignationModal } from './Modals';
+import { ConfirmationModal, DrawPermissionModal, RematchPermissionModal, ResignationModal, HomePageModal } from '../playroom/components/Modals';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { onValue, ref } from 'firebase/database';
 import { setNotification } from '@/lib/features/game/gameSlice';
@@ -60,6 +60,7 @@ const Notification = () => {
           {request.message === "rematchRequest" && request.response==="Waiting for Response" && player === request.to && <RematchPermissionModal />}
         </>
       )}
+      {notification === "Homepage" && <HomePageModal/>}
       {notification === "resignation" && <ResignationModal/>}
     </>
   );

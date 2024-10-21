@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '@/lib/hooks'
-import { WinnerModal,LoserModal, DrawModal } from './Modals'
+import { WinnerModal,LoserModal, DrawModal } from '../playroom/components/Modals'
 const GameResult = () => {
   const player = useAppSelector((state)=>state.room.player)
   const gameOver = useAppSelector((state)=>state.game.gameOver)

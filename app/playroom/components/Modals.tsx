@@ -166,6 +166,7 @@ const ResignationModal = () => {
           <form method="dialog">
             <button className="btn" onClick={ async () =>{
               await updateGameResult({roomCode,player,gameOver:'Resignation'});
+              dispatch(setNotification(""))
               router.push('/')
               
             }
@@ -180,4 +181,35 @@ const ResignationModal = () => {
   );
 };
 
-export { WinnerModal, LoserModal, DrawModal, RematchModal, DrawPermissionModal, RematchPermissionModal,ResignationModal ,ConfirmationModal };
+const HomePageModal = () => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const roomCode = useAppSelector((state) => state.room.roomCode);
+  const player = useAppSelector((state) => state.room.player);
+
+  return (
+    <dialog id="resignation_modal" className="modal text-white" open>
+      <div className="modal-box">
+        <h3 className="font-bold text-lg">Back to Home Page</h3>
+        <p className="py-4">Are you sure ?</p>
+        <div className="modal-action">
+          <form method="dialog">
+            <button className="btn" onClick={ async () =>{
+              await updateGameResult({roomCode,player,gameOver:'Resignation'});
+              dispatch(setNotification(""))
+              router.push('/')
+              
+            }
+
+            }>Yes</button>
+            <button className="btn" onClick={()=>dispatch(setNotification(""))}>No</button>
+
+          </form>
+        </div>
+      </div>
+    </dialog>
+  );
+};
+
+
+export { WinnerModal, LoserModal, DrawModal, RematchModal, DrawPermissionModal, RematchPermissionModal,ResignationModal ,ConfirmationModal ,HomePageModal };

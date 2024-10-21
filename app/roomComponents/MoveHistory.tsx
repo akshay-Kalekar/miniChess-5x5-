@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAppSelector } from '../../../lib/hooks'
+import { useAppSelector } from '../../lib/hooks'
 
 
 const MoveHistory = () => {

@@ -4,34 +4,41 @@ export const Loading: React.FC = () => {
   );
 }
 
-import React, { useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
+import { randomInt } from 'crypto';
 
 type OptionProps = {
   setButtonOption: (option: string) => void;
   setOption: (option: boolean) => void;
   setName: (name: string) => void;
+  name:string
 };
 
-export const Option: React.FC<OptionProps> = ({ setButtonOption, setOption, setName }) => {
+export const RoomOption = ({ setButtonOption, setOption, name, setName }: OptionProps) => {
+
   return (
     <>
       <div className="flex gap-6 justify-center flex-wrap w-full pt-16">
-        <div className="join input pr-0 w-4/5">
+        <div className="join input pr-0 w-4/5 gap-4 border-2 border-slate-200">
+          
           <input
-            className="input-bordered join-item w-full"
+            className="input-bordered join-item w-full "
             placeholder="What's your name ?"
             onChange={(e) => setName(e.target.value)}
+            value={name}
             required
           />
 
         </div>
+       
+        
         <button
-          className="btn btn-secondary w-1/3"
-          onClick={() => {
-            setButtonOption("Create");
-            setOption(false);
-          }}
+        className="btn btn-secondary w-1/3"
+        onClick={() => {
+          setButtonOption("Create");
+          setOption(false);
+        }}
         >
           Create Room
         </button>
@@ -41,7 +48,7 @@ export const Option: React.FC<OptionProps> = ({ setButtonOption, setOption, setN
             setButtonOption("Join");
             setOption(false);
           }}
-        >
+          >
           Join Room
         </button>
         <button className="btn btn-error w-1/3 "
@@ -51,6 +58,8 @@ export const Option: React.FC<OptionProps> = ({ setButtonOption, setOption, setN
           }}
         > Spectate </button>
         <button className="btn btn-warning w-1/3"> Practice Room </button>
+    
+
       </div>
     </>
   )
@@ -68,12 +77,12 @@ export const CodeInput: React.FC<CodeInputProps> = ({ button, setOption, name })
 
   const handleClick = () => {
     if (button == 'Join') {
-      router.push(`/room?roomcode=${code}&type=JOIN_ROOM&name=${name}`);
+      router.push(`/playroom?roomcode=${code}&type=JOIN_ROOM&name=${name ? name : 'P-2'}`);
     } else if (button == 'Create') {
-      router.push(`/room?roomcode=${code}&type=CREATE_ROOM&name=${name}`);
+      router.push(`/playroom?roomcode=${code}&type=CREATE_ROOM&name=${name ? name : 'P-1' }`);
     }
     else if (button == 'Spectate') {
-      router.push(`/room?roomcode=${code}&type=SPECTATE_ROOM&name=${name}`);
+      router.push(`/viewroom?roomcode=${code}&type=SPECTATE_ROOM&name=${name ? name : 'Spectator'}`);
     }
   };
 
