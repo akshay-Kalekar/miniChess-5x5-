@@ -7,10 +7,9 @@ import { useAppSelector } from '@/lib/hooks'
 import { setNotification } from '@/lib/features/game/gameSlice'
 import { useAppDispatch } from '@/lib/hooks'
 interface  InformationProps {
-  userName: string
   roomCode: string
 }
-const Information = ({userName,roomCode}: InformationProps) => {
+const Information = ({roomCode}: InformationProps) => {
   const dispatch = useAppDispatch();
   const playerAName  = useAppSelector((state)=>state.room.playerAName)
   

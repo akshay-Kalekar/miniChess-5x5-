@@ -42,6 +42,7 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
   const [myTurn, setMyTurn] = useState(turn === player);
   const myPiece = useAppSelector((state) => state.game.myPiece)
   const oppPiece = useAppSelector((state) => state.game.oppPiece)
+  const [boardLoaded,setBoardLoaded] = useState(false); 
   const handleMovePiece = (e: React.MouseEvent, rowIndex: number, colIndex: number) => {
     const playerAP = myPiece;
     let playerBP = oppPiece;
@@ -80,43 +81,53 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
   };
 
   useEffect(() => {
+    console.log(roomCode)
     const roomRef = ref(database, `rooms/${roomCode}`);
     console.log("roomRef");
-    const unsubscribe = async () =>
-      await onValue(roomRef, (snapshot) => {
-        const data = snapshot.val();
-        console.log("snapshot value : ", data);
-        if (data && data.gameState) {
-          if (JSON.stringify(data.gameState.layout) !== JSON.stringify(layout)) {
-            setLayout(data.gameState.layout);
+    const unsubscribe =  async () => {
+      try {
+         await onValue(roomRef, (snapshot) => {
+          const data = snapshot.val();
+          console.log("snapshot value : ", data);
+          if (data && data.gameState) {
+            if (JSON.stringify(data.gameState.layout) !== JSON.stringify(layout)) {
+              setLayout(data.gameState.layout);
+            }
+            dispatch(setTurn(data.gameState.turn));
+            if (data.gameResult.gameOver !== "NotOver") {
+              setMyTurn(false);
+            } else {
+              setMyTurn(data.gameState.turn === player);
+            }
+            if (player == 'A') {
+              dispatch(setMyPiece(data.gameState.pieceA));
+              dispatch(setOppPiece(data.gameState.pieceB));
+            }
+            else if (player == 'B') {
+              dispatch(setMyPiece(data.gameState.pieceB));
+              dispatch(setOppPiece(data.gameState.pieceA));
+            }
+            dispatch(setMoveHistory(data.gameState.moveHistory));
+            dispatch(setGameOver(data.gameResult.gameOver));
+            dispatch(setResult(data.gameResult.result));
+            dispatch(setOppName(data.players[player === "A" ? "B" : "A"] || "Waiting for Opponent"));
           }
-          dispatch(setTurn(data.gameState.turn));
-          if (data.gameResult.gameOver !== "NotOver") {
-            setMyTurn(false);
-          } else {
-            setMyTurn(data.gameState.turn === player);
-          }
-          if (player == 'A') {
-            dispatch(setMyPiece(data.gameState.pieceA));
-            dispatch(setOppPiece(data.gameState.pieceB));
-          }
-          else if (player == 'B') {
-            dispatch(setMyPiece(data.gameState.pieceB));
-            dispatch(setOppPiece(data.gameState.pieceA));
-          }
-          dispatch(setMoveHistory(data.gameState.moveHistory));
-          dispatch(setGameOver(data.gameResult.gameOver));
-          dispatch(setResult(data.gameResult.result));
-          dispatch(setOppName(data.players[player === "A" ? "B" : "A"] || "Waiting for Opponent"));
-        }
-      });
+          console.log("snapshot value 2: ", data);
+          setBoardLoaded(true);
+          
+        });
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
     return () => {
       unsubscribe();
     };
-  }, [roomCode, player, dispatch, layout]);
+  },[roomCode, player, dispatch, layout]);
   console.log("After Move", layout);
-  if (!layout) return <div>Loading...</div>
+  if (!boardLoaded) return <div>Loading...</div>
   return (
     <>
 
@@ -141,13 +152,12 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
                 ${myTurn && player === cell[0] ? "text-green-400" : ""}`}
               onClick={(e) => {
                 const target = e.target as HTMLElement;
-                console.log(target.textContent[0],player)
+                const content = target.textContent || "";
                 return (
-                  selectedPieceInfo.piece === "" || target.textContent[0] === player
+                  selectedPieceInfo.piece === "" || content[0] === player
                     ? selectPiece(
                       {
                         e,
-                        selectedPieceInfo,
                         player,
                         myTurn,
                         layout,

@@ -1,10 +1,8 @@
 
-import { useAppDispatch, useAppSelector } from '@/lib/hooks'
-import { setNotification } from '@/lib/features/game/gameSlice'
+import { useAppSelector } from '@/lib/hooks'
 
 const Information2 = () => {
   
-  const dispatch = useAppDispatch();
   const playerBName = useAppSelector((state)=>state.room.playerBName)
   const oppPiece = useAppSelector((state)=>state.game.oppPiece)
 
@@ -15,8 +13,6 @@ const Information2 = () => {
       <div className="stat-title">Player B</div>
       <div className="stat-value">{playerBName}</div>
     </div>
-  
-   
     <div className="stat">
       <div className="stat-title">Piece Left</div>
       <div className="stat-value">{oppPiece}</div>

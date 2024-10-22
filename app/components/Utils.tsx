@@ -4,9 +4,8 @@ export const Loading: React.FC = () => {
   );
 }
 
-import React, { use, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from "next/navigation";
-import { randomInt } from 'crypto';
 
 type OptionProps = {
   setButtonOption: (option: string) => void;

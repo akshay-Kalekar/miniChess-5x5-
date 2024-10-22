@@ -110,14 +110,13 @@ const moveHelper =(selectedPieceInfo:selectedPieceInfoInterface,layout:Array<Arr
 //Selecting a piece and showing possible moves
 interface SelectPieceProps {
     e: React.MouseEvent<HTMLElement>;
-    selectedPieceInfo: selectedPieceInfoInterface;
     player: string;
     myTurn: boolean;
     layout: Array<Array<string>>;
     setSelectedPieceInfo: React.Dispatch<React.SetStateAction<selectedPieceInfoInterface>>;
     setPossibleMoveLayout: React.Dispatch<React.SetStateAction<Array<Array<string>>>>;
 }
-const selectPiece = ({e, selectedPieceInfo, player, myTurn, layout, setSelectedPieceInfo, setPossibleMoveLayout}: SelectPieceProps) => {
+const selectPiece = ({e, player, myTurn, layout, setSelectedPieceInfo, setPossibleMoveLayout}: SelectPieceProps) => {
     const target = e.target as HTMLElement;
     const piece = target.textContent;
     

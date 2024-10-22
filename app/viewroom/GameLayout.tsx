@@ -54,7 +54,7 @@ const GameLayout: React.FC = () => {
   return (
       <>
       <div className='flex flex-col '>
-      <Information userName={userName} roomCode={roomCode} />
+      <Information roomCode={roomCode} />
       <div className=' absolute top-4 right-4  z-10'>
       {contextHolder}
       </div>
@@ -63,7 +63,7 @@ const GameLayout: React.FC = () => {
       <div className='flex md:gap-2 justify-center md:justify-around md:h-[75vh] items-center p-2 md:p-10'>
         <div className='hidden md:block h-full w-4/12 '><MoveHistory /></div>
         <div className='h-10/12  w-11/12 md:w-6/12'><Board roomCode={roomCode} player={player}  /></div>
-        <div className='hidden md:block h-full w-4/12 '><Chat roomCode={roomCode} player={player} /></div>
+        <div className='hidden md:block h-full w-4/12 '><Chat roomCode={roomCode}/></div>
         <div />
         </div>
         <Information2 />
