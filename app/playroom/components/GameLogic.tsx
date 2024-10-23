@@ -21,7 +21,7 @@ interface RoomProps{
     playerName:string
 }
 export const createRoom = async ({roomCode,playerName}:RoomProps) => {
-    console.log(roomCode,playerName)
+    // console.log(roomCode,playerName)
     const roomRef = ref( database ,`rooms/${roomCode}`);
     await set(roomRef,{
         players : {A:playerName,B:null},
@@ -71,7 +71,7 @@ export const joinRoom = async ({roomCode,playerName}:RoomProps)=>{
 export const spectateRoom = async ({roomCode}:{roomCode:string})=>{
     const roomRef = ref(database,`rooms/${roomCode}`);
     const roomSnapshot = await get(roomRef);
-    console.log("getRoom",roomSnapshot.val())
+    // console.log("getRoom",roomSnapshot.val())
     if(roomSnapshot.exists()){
         return "Room joined as Spectator"
     }
@@ -117,7 +117,7 @@ interface updateGameResultProps{
     gameOver:string,
 }
 export const updateGameResult = async ({roomCode,player,gameOver}:updateGameResultProps) =>{
-    console.log("Request to resignation",roomCode,player,gameOver)    
+    // console.log("Request to resignation",roomCode,player,gameOver)    
     const gameStateRef = ref(database,`rooms/${roomCode}/gameResult`)
     let result="";
     if(gameOver==='Resignation'){
@@ -151,7 +151,7 @@ interface updateRoomProps{
     mH:string[]
 }
 export const updateRoom = async ({roomCode,updatelayout,turn,pieceA,pieceB,mH}:updateRoomProps) =>{
-    console.log(turn,"-- Update Room")
+    // console.log(turn,"-- Update Room")
     const gameStateRef = ref(database,`rooms/${roomCode}/gameState`)
     const result = pieceA===0? 'B': pieceB===0? 'A':'none'
     let gameOver = 'NotOver'

@@ -81,14 +81,13 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
   };
 
   useEffect(() => {
-    console.log(roomCode)
+    // console.log(roomCode)
     const roomRef = ref(database, `rooms/${roomCode}`);
-    console.log("roomRef");
-    const unsubscribe =  async () => {
-      try {
-         await onValue(roomRef, (snapshot) => {
+    // console.log("roomRef");
+    const unsubscribe =   () => {
+          onValue(roomRef, (snapshot) => {
           const data = snapshot.val();
-          console.log("snapshot value : ", data);
+          // console.log("snapshot value : ", data);
           if (data && data.gameState) {
             if (JSON.stringify(data.gameState.layout) !== JSON.stringify(layout)) {
               setLayout(data.gameState.layout);
@@ -112,21 +111,14 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
             dispatch(setResult(data.gameResult.result));
             dispatch(setOppName(data.players[player === "A" ? "B" : "A"] || "Waiting for Opponent"));
           }
-          console.log("snapshot value 2: ", data);
+          // console.log("snapshot value 2: ", data);
           setBoardLoaded(true);
           
         });
-
-      } catch (error) {
-        console.log(error)
-      }
     }
-
-    return () => {
-      unsubscribe();
-    };
+    unsubscribe();
   },[roomCode, player, dispatch, layout]);
-  console.log("After Move", layout);
+  // console.log("After Move", layout);
   if (!boardLoaded) return <div>Loading...</div>
   return (
     <>
@@ -138,7 +130,7 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
               key={colIndex}
               data-x={rowIndex}
               data-y={colIndex}
-              className={`border-2 border-white w-28 h-28 text-center flex items-center justify-center flex-row-reverse
+              className={`border-2 border-white w-24 h-24 text-center flex items-center justify-center flex-row-reverse
                 ${cell === selectedPieceInfo.piece && cell !== ""
                   ? "bg-gray-600"
                   : ""

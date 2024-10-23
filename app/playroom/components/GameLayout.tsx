@@ -17,39 +17,34 @@ import Notification from '../../roomComponents/Notification'
 const GameLayout: React.FC = () => {
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
-  dispatch(setOppName("Waiting to Join"));
-  dispatch(setUserName(searchParams.get('name')));
-  dispatch(setRoomCode(searchParams.get('roomcode')))
+  useEffect(() => {
+    dispatch(setOppName("Waiting to Join"));
+    dispatch(setRoomCode(searchParams.get('roomcode')))
+    dispatch(setUserName(searchParams.get('name')));
+    dispatch(setPlayer(searchParams.get('type') === 'CREATE_ROOM' ? 'A' : searchParams.get('type') === 'JOIN_ROOM' ? 'B' : ''));
+},[dispatch,searchParams])
   const isHost = searchParams.get('type') || "";
   const player = useAppSelector((state) => state.room.player)
   const userName = useAppSelector((state) => state.room.userName);
-  const roomCode = useAppSelector((state) => state.room.roomCode);
+  const roomCode = useAppSelector((state) => state.room.roomCode) || searchParams.get('roomcode') || "";
 
   const [messageApi, contextHolder] = message.useMessage();
-  const [playerChar, setPlayerChar] = useState<'A' | 'B' | 'C' | ''>('C');
   const [connection, setConnection] = useState<boolean>(false)
   useEffect(() => {
     // Initialize the global messageApi
     initMessageApi(messageApi);
     async function roomConnection() {
       const isConnection: boolean = await handleRoomConnection(isHost, userName, roomCode) || false
-      if (isConnection) {
-        setPlayerChar(searchParams.get('type') === 'CREATE_ROOM' ? 'A' : searchParams.get('type') === 'JOIN_ROOM' ? 'B' : searchParams.get('type') === 'SPECTATE_ROOM' ? 'C' : '');
-      }
+      console.log(isConnection)
       setConnection(isConnection)
     }
     roomConnection()
   }, [isHost, searchParams, messageApi, roomCode, userName]);
+
   if (connection === false) {
     return (
       <div>Loading</div>
     )
-  }
-  if (playerChar
-    && player == ""
-  ) {
-    dispatch(setPlayer(playerChar))
-
   }
   return (
     <>

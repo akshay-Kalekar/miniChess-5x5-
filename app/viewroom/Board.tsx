@@ -26,7 +26,6 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
     const [myTurn, setMyTurn] = useState(turn === player);
     useEffect(() => {
         const roomRef = ref(database, `rooms/${roomCode}`);
-        console.log("roomRef");
         const unsubscribe = async () =>
             await onValue(roomRef, (snapshot) => {
                 const data = snapshot.val();
@@ -50,12 +49,10 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
                     dispatch(setPlayerBName(data.players.B || "Waiting for Player B"));
                 }
             });
-
         return () => {
             unsubscribe();
         };
     }, [roomCode, player, dispatch, layout]);
-    console.log("After Move", layout);
     if (!layout) return <div>Loading...</div>
     return (
         <>

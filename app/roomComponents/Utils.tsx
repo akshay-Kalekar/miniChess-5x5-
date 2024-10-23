@@ -34,9 +34,9 @@ export const piecesMovementInfo:pieceMovementInfoInterface = {
 const handleRoomConnection = async ( isHost:string,userName:string,roomCode:string)=>{
 
     if(isHost==="CREATE_ROOM"){
-        console.log("Create Room")
+        // console.log("Create Room")
         const roomCreated = await createRoom({roomCode,playerName:userName})
-        console.log(roomCreated)
+        // console.log(roomCreated)
         if(roomCreated==='Room Created'){
             success("Room Created")
             return true;
@@ -149,7 +149,6 @@ interface MovePieceProps {
 }
 const movePiece = ({move_x,move_y,selectedPieceInfo, layout, setLayout, setSelectedPieceInfo,possibleMoveLayout,setPossibleMoveLayout}: MovePieceProps) => {
     if (selectedPieceInfo.piece !== "") {
-        console.log("Made Move")
         const x = move_x;
         const y = move_y;
         if(possibleMoveLayout[x][y]=='*' || possibleMoveLayout[x][y]=='-1'){

@@ -11,9 +11,9 @@ const MoveHistory = () => {
     }
 
     return (
-        <div className=' flex flex-col justify-center items-center py-4'>
+        <div className=' flex flex-col justify-center items-center pb-4'>
             <h3 className="text-lg font-semibold ">Moves History</h3>
-        <div className="h-full w-full  overflow-x-auto text-center  ">
+        <div className="h-[65vh] w-full  overflow-x-auto text-center  scrollbar-thin ">
             <table className="table table-pin-rows h-fit overflow-x-auto rounded-md ">
                 <thead className=''>
                     <tr className='text-white'>

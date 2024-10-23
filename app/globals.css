@@ -21,3 +21,7 @@ body {
     text-wrap: balance;
   }
 }
+
+.scrollbar-thin {
+  scrollbar-width:thin;
+}

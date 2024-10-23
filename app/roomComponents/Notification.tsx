@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ConfirmationModal, DrawPermissionModal, RematchPermissionModal, ResignationModal, HomePageModal } from '../playroom/components/Modals';
+import { ConfirmationModal, DrawPermissionModal, RematchPermissionModal, ResignationModal, HomePageModal } from './Modals';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { onValue, ref } from 'firebase/database';
 import { setNotification } from '@/lib/features/game/gameSlice';
@@ -42,7 +42,7 @@ const Notification = () => {
       error("Your request was rejected.");
     }
   }, [request.response, request.to, player]);
-  console.log(notification)
+  // console.log(notification)
   return (
     <>
       {/* Handle draw request */}

@@ -34,7 +34,7 @@ const Chat:React.FC<ChatProps> = ({ roomCode }) => {
     }, [roomCode])
 
     return (
-        <div className='flex flex-col justify-between h-full pb-4  overflow-y-scroll border-2 bg-black/20 rounded-md '>
+        <div className='flex flex-col justify-between h-full pb-4  overflow-y-scroll border-2 bg-black/20 rounded-md scrollbar-thin'>
             <div className='text-center text-4xl stat-value  py-4  rounded-sm h-full w-full'> Chat room</div>
             <div>
 

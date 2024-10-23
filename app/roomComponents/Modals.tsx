@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { updateGameResult,updateGameRequest, resetRoom } from './GameLogic';
+import { updateGameResult,updateGameRequest, resetRoom } from '../playroom/components/GameLogic';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { setNotification } from '@/lib/features/game/gameSlice';
 
@@ -74,7 +74,7 @@ const RematchModal = () => {
         <p className="py-4">Do you want a rematch?</p>
         <div className="modal-action">
           <form method="dialog">
-            <button className="btn">Accept</button>
+            <button className="btn mr-2">Accept</button>
             <button className="btn">Reject</button>
           </form>
         </div>
@@ -84,7 +84,7 @@ const RematchModal = () => {
 };
 const ConfirmationModal = ({message}:{message:string}) => {
   const dispatch = useAppDispatch();
-  console.log(message,"confirmation - modal")
+  // console.log(message,"confirmation - modal")
   const roomCode = useAppSelector((state) => state.room.roomCode);
   const player = useAppSelector((state) => state.room.player);
   let text;
@@ -101,7 +101,7 @@ const ConfirmationModal = ({message}:{message:string}) => {
         <p className="py-4">{text}</p>
         <div className="modal-action">
           <form method="dialog">
-            <button className="btn" onClick={()=>{updateGameRequest({roomCode,player,message}); dispatch(setNotification("")) ;
+            <button className="btn mr-2" onClick={()=>{updateGameRequest({roomCode,player,message}); dispatch(setNotification("")) ;
             }} >Yes</button>
             <button className="btn" onClick={()=>dispatch(setNotification(""))}>No</button>
           </form>
@@ -122,7 +122,7 @@ const DrawPermissionModal = () => {
         <p className="py-4">Do you want to accept a draw?</p>
         <div className="modal-action">
           <form method="dialog">
-            <button className="btn" onClick={()=>{updateGameRequest({roomCode,player,message:"drawRequest",response:"Yes"}); updateGameResult({roomCode,player,gameOver:"drawRequest"}); dispatch(setNotification("")); }}>Accept</button>
+            <button className="btn mr-2" onClick={()=>{updateGameRequest({roomCode,player,message:"drawRequest",response:"Yes"}); updateGameResult({roomCode,player,gameOver:"drawRequest"}); dispatch(setNotification("")); }}>Accept</button>
             <button className="btn" onClick={()=>{updateGameRequest({roomCode,player,message:"drawRequest",response:"No"}); dispatch(setNotification("")); }}>Reject</button>
           </form>
         </div>
@@ -141,7 +141,7 @@ const RematchPermissionModal = () => {
         <p className="py-4">Do you want to accept a rematch?</p>
         <div className="modal-action">
           <form method="dialog">
-            <button className="btn" onClick={()=>{updateGameRequest({roomCode,player,message:"rematchRequest",response:"Yes"}); resetRoom(roomCode); dispatch(setNotification(""))}}>Accept</button>
+            <button className="btn mr-2" onClick={()=>{updateGameRequest({roomCode,player,message:"rematchRequest",response:"Yes"}); resetRoom(roomCode); dispatch(setNotification(""))}}>Accept</button>
             <button className="btn" onClick={()=>{updateGameRequest({roomCode,player,message:"rematchRequest",response:"No"}); dispatch(setNotification(""));}}>Reject</button>
           </form>
         </div>
@@ -164,7 +164,7 @@ const ResignationModal = () => {
         <p className="py-4">Do you want to resign?</p>
         <div className="modal-action">
           <form method="dialog">
-            <button className="btn" onClick={ async () =>{
+            <button className="btn mr-2" onClick={ async () =>{
               await updateGameResult({roomCode,player,gameOver:'Resignation'});
               dispatch(setNotification(""))
               router.push('/')
@@ -194,7 +194,7 @@ const HomePageModal = () => {
         <p className="py-4">Are you sure ?</p>
         <div className="modal-action">
           <form method="dialog">
-            <button className="btn" onClick={ async () =>{
+            <button className="btn mr-2" onClick={ async () =>{
               await updateGameResult({roomCode,player,gameOver:'Resignation'});
               dispatch(setNotification(""))
               router.push('/')
