@@ -1,6 +1,19 @@
+// import Image from 'next/image'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
+import horseGif from '@/app/assets/dotLottle/horse.lottie'
+
 export const Loading: React.FC = () => {
   return (
-    <> Loading . . .</>
+    <> 
+     <div className='h-screen flex flex-col justify-center items-center h-6/12'>
+    <div className='h-3/6'>
+    <DotLottieReact src={horseGif} loop autoplay/>
+    </div>
+    <div className='text-2xl'>
+    Setting up Game . . .
+    </div>
+    </div>
+    </>
   );
 }
 

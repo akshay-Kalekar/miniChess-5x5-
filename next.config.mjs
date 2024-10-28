@@ -12,6 +12,17 @@ const nextConfig = {
         },
       },
     });
+    config.module.rules.push({
+      test: /\.lottie$/,
+      use: {
+        loader: 'file-loader',
+        options: {
+          outputPath: 'static/assets/lotties',
+          publicPath: '/_next/static/assets/lotties',
+          name: '[name].[hash].[ext]',
+        },
+      },
+    });
 
     return config;
   },

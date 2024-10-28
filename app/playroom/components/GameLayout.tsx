@@ -1,6 +1,6 @@
 'use client'
-import React, { useState, useEffect } from 'react'
-import {initMessageApi } from '../../roomComponents/Alerts'
+import React, { useState, useEffect, Suspense } from 'react'
+import { initMessageApi } from '../../roomComponents/Alerts'
 import MoveHistory from '../../roomComponents/MoveHistory'
 import Information from './Information'
 import Information2 from './Information2'
@@ -13,8 +13,8 @@ import GameResult from '../../roomComponents/GameResult'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 import { setOppName, setPlayer, setRoomCode, setUserName } from '@/lib/features/room/roomSlice'
 import Notification from '../../roomComponents/Notification'
-import Image from 'next/image'
-import rook from '../../assets/rook-globalrook.gif'
+import { Loading } from '@/app/components/Utils'
+import { set } from 'firebase/database'
 
 const GameLayout: React.FC = () => {
   const searchParams = useSearchParams();
@@ -24,7 +24,7 @@ const GameLayout: React.FC = () => {
     dispatch(setRoomCode(searchParams.get('roomcode')))
     dispatch(setUserName(searchParams.get('name')));
     dispatch(setPlayer(searchParams.get('type') === 'CREATE_ROOM' ? 'A' : searchParams.get('type') === 'JOIN_ROOM' ? 'B' : ''));
-},[dispatch,searchParams])
+  }, [dispatch, searchParams])
   const isHost = searchParams.get('type') || "";
   const player = useAppSelector((state) => state.room.player)
   const userName = useAppSelector((state) => state.room.userName);
@@ -36,30 +36,26 @@ const GameLayout: React.FC = () => {
     // Initialize the global messageApi
     initMessageApi(messageApi);
     async function roomConnection() {
-      try{
+      try {
 
         const isConnection: boolean = await handleRoomConnection(isHost, userName, roomCode) || false
-        console.log(isConnection)
-        setTimeout(()=>{
-          setConnection(isConnection)
-        },3000);
-      }catch(e){
+        console.log(isConnection);
+        setTimeout(() => {
+          setConnection(isConnection);
+        }, 2000);
+      } catch (e) {
         console.log(e);
       }
-     
+
     }
     roomConnection()
-   
-  }, [isHost, searchParams, messageApi, roomCode, userName]);
 
-  if (connection === false) {
-    return (
-      <div className='h-screen flex flex-col justify-center items-center'>
-        <Image src={rook} width={200} height={200} alt='rook' />
-       Setting up Game</div>
-    )
+  }, [isHost, searchParams, messageApi, roomCode, userName]);
+  if(!connection) {
+    return <Loading />
   }
   return (
+
     <>
       {player === 'A' || player === 'B' ?
         <>
