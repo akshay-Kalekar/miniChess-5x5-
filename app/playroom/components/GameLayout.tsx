@@ -13,6 +13,8 @@ import GameResult from '../../roomComponents/GameResult'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 import { setOppName, setPlayer, setRoomCode, setUserName } from '@/lib/features/room/roomSlice'
 import Notification from '../../roomComponents/Notification'
+import Image from 'next/image'
+import rook from '../../assets/rook-globalrook.gif'
 
 const GameLayout: React.FC = () => {
   const searchParams = useSearchParams();
@@ -34,16 +36,27 @@ const GameLayout: React.FC = () => {
     // Initialize the global messageApi
     initMessageApi(messageApi);
     async function roomConnection() {
-      const isConnection: boolean = await handleRoomConnection(isHost, userName, roomCode) || false
-      console.log(isConnection)
-      setConnection(isConnection)
+      try{
+
+        const isConnection: boolean = await handleRoomConnection(isHost, userName, roomCode) || false
+        console.log(isConnection)
+        setTimeout(()=>{
+          setConnection(isConnection)
+        },3000);
+      }catch(e){
+        console.log(e);
+      }
+     
     }
     roomConnection()
+   
   }, [isHost, searchParams, messageApi, roomCode, userName]);
 
   if (connection === false) {
     return (
-      <div>Loading</div>
+      <div className='h-screen flex flex-col justify-center items-center'>
+        <Image src={rook} width={200} height={200} alt='rook' />
+       Setting up Game</div>
     )
   }
   return (

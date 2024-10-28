@@ -22,7 +22,7 @@ const initialState = {
     gameOver: "NotOver",
     notification:""
 }
-//Plan Out the notification feature if new opbjcet had notify only requestor
+//Plan Out the notification feature if new object had notify only requestor
 const gameSlice = createSlice({
     name: "game",
     initialState,

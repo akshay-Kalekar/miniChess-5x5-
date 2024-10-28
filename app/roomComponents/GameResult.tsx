@@ -24,6 +24,11 @@ const GameResult = () => {
     return (
       <WinnerModal player={userName} message={`Won by ${oppName} resignation`} />
     )
+    else{
+      return (
+        <LoserModal player={userName} oppName={oppName} />
+      )
+    }
   }
   else if(gameOver==="Draw"){
     return (

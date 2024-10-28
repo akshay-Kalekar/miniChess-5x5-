@@ -9,6 +9,7 @@ interface WinnerModalProps {
   message?: string;
 }
 const WinnerModal = ({ player, message = "" }:WinnerModalProps) => {
+  const router = useRouter();
   return (
     <dialog id="winner_modal" className="modal" open>
       <div className="modal-box">
@@ -17,6 +18,10 @@ const WinnerModal = ({ player, message = "" }:WinnerModalProps) => {
         <p className="py-4">{message}</p>
         <div className="modal-action">
           <form method="dialog">
+          <button className="btn mr-2" onClick={ () =>{ 
+              router.push('/');
+            }
+            }>Home Page</button>
             <button className="btn">Close</button>
           </form>
         </div>
@@ -38,10 +43,10 @@ const LoserModal = ({ player = "aks", oppName = "hero" }:LoserModalProps) => {
         <p className="py-4">Looks like {oppName} outsmarted you</p>
         <div className="modal-action">
           <form method="dialog">
-          <button className="btn" onClick={ () =>{ 
+          <button className="btn mr-2" onClick={ () =>{ 
               router.push('/')
             }
-            }>New Game</button>
+            }>Home Page</button>
             <button className="btn">Close</button>
           </form>
         </div>
@@ -153,7 +158,6 @@ const RematchPermissionModal = () => {
 
 const ResignationModal = () => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const roomCode = useAppSelector((state) => state.room.roomCode);
   const player = useAppSelector((state) => state.room.player);
 
@@ -166,9 +170,7 @@ const ResignationModal = () => {
           <form method="dialog">
             <button className="btn mr-2" onClick={ async () =>{
               await updateGameResult({roomCode,player,gameOver:'Resignation'});
-              dispatch(setNotification(""))
-              router.push('/')
-              
+              dispatch(setNotification(""));
             }
 
             }>Yes</button>

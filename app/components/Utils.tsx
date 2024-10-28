@@ -93,6 +93,7 @@ export const CodeInput: React.FC<CodeInputProps> = ({ button, setOption, name })
           placeholder="Enter code"
           value={code}
           onChange={(e) => setCode(e.target.value)}
+          maxLength={8}
         />
         <button className="btn btn-accent join-item rounded-r-md w-2/5 h-1/3" onClick={handleClick}>
           {button}

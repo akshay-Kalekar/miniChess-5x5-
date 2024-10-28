@@ -10,12 +10,16 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setGameOver, setMyPiece, setOppPiece, setResult, setTurn } from "@/lib/features/game/gameSlice";
 import { setMoveHistory } from "@/lib/features/game/gameSlice";
 import { setOppName } from "@/lib/features/room/roomSlice";
+import moveSound from '@/app/assets/sound/move.mp3';
+import useSound from 'use-sound';
+
 interface BoardInterface {
   roomCode: string;
   player: string;
 }
 
 const Board: FC<BoardInterface> = ({ roomCode, player }) => {
+  const [playMoveSound] = useSound(moveSound,{volume: 0.5})
   const dispatch = useAppDispatch();
   const turn = useAppSelector((state) => state.game.turn)
   const moveHistory = useAppSelector((state) => state.game.moveHistory);
@@ -91,6 +95,7 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
           if (data && data.gameState) {
             if (JSON.stringify(data.gameState.layout) !== JSON.stringify(layout)) {
               setLayout(data.gameState.layout);
+              playMoveSound();
             }
             dispatch(setTurn(data.gameState.turn));
             if (data.gameResult.gameOver !== "NotOver") {
@@ -105,7 +110,7 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
             else if (player == 'B') {
               dispatch(setMyPiece(data.gameState.pieceB));
               dispatch(setOppPiece(data.gameState.pieceA));
-            }
+            }    
             dispatch(setMoveHistory(data.gameState.moveHistory));
             dispatch(setGameOver(data.gameResult.gameOver));
             dispatch(setResult(data.gameResult.result));
@@ -117,9 +122,8 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
         });
     }
     unsubscribe();
-  },[roomCode, player, dispatch, layout]);
-  // console.log("After Move", layout);
-  if (!boardLoaded) return <div>Loading...</div>
+  },[roomCode, player, myPiece, oppPiece, layout,dispatch,playMoveSound]);
+  if (!boardLoaded) return <div>Failed to fetch Board</div>
   return (
     <>
 

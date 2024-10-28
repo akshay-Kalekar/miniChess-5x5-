@@ -6,13 +6,16 @@ import Image from 'next/image'
 import { useAppSelector } from '@/lib/hooks'
 import { setNotification } from '@/lib/features/game/gameSlice'
 import { useAppDispatch } from '@/lib/hooks'
+import { useRouter } from 'next/navigation'
 interface  InformationProps {
   userName: string
   roomCode: string
 }
 const Information = ({userName,roomCode}: InformationProps) => {
+  const router = useRouter()
   const dispatch = useAppDispatch();
   const myPiece = useAppSelector((state)=>state.game.myPiece)
+  const gameOver = useAppSelector((state)=>state.game.gameOver)
   const [copied,setCopied] = useState(copy);
   useEffect(()=>{
     if(copied===check){
@@ -37,11 +40,16 @@ const Information = ({userName,roomCode}: InformationProps) => {
       <div className=" ">Room code</div>
       <div className="stat-value flex  gap-2 justify-center cursor-copy p-2 border-white/40  rounded-md items-center " >{roomCode}<Image src={copied} height={20} width={20} className='relative -bottom-1' alt="copy-icon"/></div>
     </div>
-  
+  {gameOver=="NotOver" ? 
     <div className="stat hover:text-red-500  ">
       <div className="stat-title"></div>
       <div className="stat-value " onClick={()=>dispatch(setNotification("resignation"))}>Resign</div>
-    </div>
+    </div> :
+    <div className="stat hover:text-red-500  ">
+    <div className="stat-title"></div>
+    <div className="stat-value " onClick={()=>router.push('/')}>Home Page</div>
+  </div>
+    }
     
   </div>
   </>
