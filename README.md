@@ -24,9 +24,9 @@ In this 5x5 chess variant, players use three distinct pieces: 'P,' which moves o
 
 ## ℹ️ About the Project
 
-This 5x5 chess variant offers a unique and streamlined experience, featuring only three distinct pieces that encourage strategic thinking on a compact board. The 'P' piece moves one block in any of the four cardinal directions, the 'H1' piece moves in a plus pattern, skipping one block, and the 'H2' piece moves diagonally, also skipping one block. These simplified moves and the reduced board size enhance tactical gameplay, making each move impactful.
+This 5x5 chess variant offers a unique and streamlined experience, featuring only three pieces that encourage strategic thinking on a compact board. The 'P' piece moves one block in any of the four cardinal directions, the 'H1' piece moves in a plus pattern, skipping one block, and the 'H2' piece moves diagonally, skipping one block. These simplified moves and the reduced board size enhance tactical gameplay, making each move impactful.
 
-Built with Next.js, the project leverages the framework's efficient server-side rendering and fast navigation to create a seamless user experience. Tailwind CSS is used for styling, offering a sleek, responsive design that enhances usability across devices. The Firebase Realtime Database powers the multiplayer functionality, allowing for smooth, real-time game state updates between players. Firebase’s robust, scalable backend also supports player synchronization, ensuring that each move is instantly reflected on both sides of the board, regardless of device.
+Built with Next.js, the project leverages the framework's efficient server-side rendering and fast navigation to create a seamless user experience. Tailwind CSS is used for styling, offering a sleek, responsive design that enhances device usability. The Firebase Realtime Database powers the multiplayer functionality, allowing for smooth, real-time game state updates between players. Firebase’s robust, scalable backend also supports player synchronization, ensuring that each move is instantly reflected on both sides of the board, regardless of device.
 
 This project exemplifies the integration of modern front-end technologies to create an engaging, multiplayer game with a unique twist on traditional chess mechanics, tailored to a minimalist 5x5 setup.
 
@@ -50,6 +50,42 @@ This project exemplifies the integration of modern front-end technologies to cre
 [Tailwind CSS-badge]: https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwindcss
 [Tailwind CSS-url]: }
 
+## Setup
+### Clone the Repository:
+```bash
+git clone https://github.com/akshay-Kalekar//miniChess-5x5-.git
+cd miniChess-5x5-
+```
+### Install Dependencies
+```bash
+npm install
+# or
+yarn install
+```
+### Environment Setup:
+```.local.env
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+NEXT_PUBLIC_FIREBASE_DATABASE_URL=your_firebase_database_url
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
+```
+
+###Run the development server:
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
 ## 👨🏻‍ About the Author
@@ -62,5 +98,4 @@ This project was created by Akshay Ajay Kalekar. Connect with me on [GitHub](htt
 <p align="right"><a href="#readme-top">Top ⬆️</a></p>
 
 ---
- <div align="center">Built with ❤️ with <a href="https://github.com/luisvent/document_my_project">Document My Project</a></div>
 
