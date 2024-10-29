@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<a name="readme-top"></a>
+<div align="center">
 
-## Getting Started
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Mini Chess 5x5
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+In this 5x5 chess variant, players use three distinct pieces: 'P,' which moves one block in any of the four cardinal directions; 'H1,' which moves in a plus pattern, skipping one block; and 'H2,' which moves diagonally, also skipping one block. This simplified yet strategic setup reimagines traditional chess tactics on a smaller board, encouraging fresh, dynamic gameplay.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+</div>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+<div align="center"><h4><a href="#-table-of-contents">️Table of Contents</a> • <a href="#-about-the-project">ℹ️ About the Project</a> • <a href="#-stack-tech">🛠 Stack Tech</a> • <a href="#-about-the-author">👨🏻‍ About the Author</a></h4></div>
 
-To learn more about Next.js, take a look at the following resources:
+## ️Table of Contents
+ <details>
+<summary>Open Contents</summary>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Mini Chess 5x5](#mini-chess-5x5)
+  - [ℹ️ About the Project](#-about-the-project)
+  - [🛠 Stack Tech](#-stack-tech)
+  - [👨🏻‍ About the Author](#-about-the-author)
+</details>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ℹ️ About the Project
 
-## Deploy on Vercel
+This 5x5 chess variant offers a unique and streamlined experience, featuring only three distinct pieces that encourage strategic thinking on a compact board. The 'P' piece moves one block in any of the four cardinal directions, the 'H1' piece moves in a plus pattern, skipping one block, and the 'H2' piece moves diagonally, also skipping one block. These simplified moves and the reduced board size enhance tactical gameplay, making each move impactful.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Built with Next.js, the project leverages the framework's efficient server-side rendering and fast navigation to create a seamless user experience. Tailwind CSS is used for styling, offering a sleek, responsive design that enhances usability across devices. The Firebase Realtime Database powers the multiplayer functionality, allowing for smooth, real-time game state updates between players. Firebase’s robust, scalable backend also supports player synchronization, ensuring that each move is instantly reflected on both sides of the board, regardless of device.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project exemplifies the integration of modern front-end technologies to create an engaging, multiplayer game with a unique twist on traditional chess mechanics, tailored to a minimalist 5x5 setup.
+
+
+
+## 🛠 Stack Tech
+- [![Firebase][Firebase-badge]][Firebase-url] - Mobile & web app development platform
+
+[Firebase-badge]: https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase
+[Firebase-url]: }
+- [![Next.js][Next.js-badge]][Next.js-url] - A server-side rendered framework for building React applications
+
+[Next.js-badge]: https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextjs
+[Next.js-url]: }
+- [![TypeScript][TypeScript-badge]][TypeScript-url] - A strict syntactical superset of JavaScript
+
+[TypeScript-badge]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript
+[TypeScript-url]: }
+- [![Tailwind CSS][Tailwind CSS-badge]][Tailwind CSS-url] - Utility-first CSS framework
+
+[Tailwind CSS-badge]: https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwindcss
+[Tailwind CSS-url]: }
+
+
+
+## 👨🏻‍ About the Author
+
+**Akshay Ajay Kalekar**
+
+This project was created by Akshay Ajay Kalekar. Connect with me on [GitHub](https://github.com/https://github.com/akshay-Kalekar)  to learn more about my projects and professional background.
+
+
+<p align="right"><a href="#readme-top">Top ⬆️</a></p>
+
+---
+ <div align="center">Built with ❤️ with <a href="https://github.com/luisvent/document_my_project">Document My Project</a></div>
+
