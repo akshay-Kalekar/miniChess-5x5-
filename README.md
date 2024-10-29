@@ -73,7 +73,7 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
 ```
 
-###Run the development server:
+### Run the development server:
 ```bash
 npm run dev
 # or
