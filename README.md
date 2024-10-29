@@ -10,7 +10,7 @@ In this 5x5 chess variant, players use three distinct pieces: 'P,' which moves o
 </div>
 
 
-<div align="center"><h4><a href="#-table-of-contents">️Table of Contents</a> • <a href="#-about-the-project">ℹ️ About the Project</a> • <a href="#-stack-tech">🛠 Stack Tech</a> • <a href="#-%EF%B8%8F-setup">🛠 setup</a> • <a href="#-about-the-author">👨🏻‍ About the Author</a></h4></div>
+<div align="center"><h4><a href="#-table-of-contents">️Table of Contents</a> • <a href="#-about-the-project">ℹ️ About the Project</a> • <a href="#-stack-tech">🛠 Stack Tech</a> • <a href="⚙️-setup">⚙️ setup</a> • <a href="#-about-the-author">👨🏻‍ About the Author</a></h4></div>
 
 ## ️Table of Contents
  <details>
