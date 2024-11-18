@@ -23,6 +23,15 @@ const nextConfig = {
         },
       },
     });
+    config.module.rules.push({
+      test: /\.(png|jpe?g|gif)$/i,
+      type: 'asset/resource', 
+      generator: {
+        filename: 'static/assets/images/[name].[hash][ext]', 
+      },
+    });
+
+    
 
     return config;
   },

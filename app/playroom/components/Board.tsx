@@ -13,18 +13,17 @@ import { setOppName } from "@/lib/features/room/roomSlice";
 import moveSound from '@/app/assets/sound/move.mp3';
 import useSound from 'use-sound';
 import Image from "next/image";
-import type { StaticImageData } from 'next/image';
 // import H2 from "@/app/assets/piece/one_piece/05.png"
 // import H1 from "@/app/assets/piece/one_piece/04.png"
 // import P3 from "@/app/assets/piece/one_piece/03.png"
 // import P2 from "@/app/assets/piece/one_piece/02.png"
 // import P1 from "@/app/assets/piece/one_piece/01.png"
 
-import H2 from "@/app/assets/piece/ancient/01.png"
-import H1 from "@/app/assets/piece/ancient/02.png"
-import P3 from "@/app/assets/piece/ancient/03.png"
-import P2 from "@/app/assets/piece/ancient/03.png"
-import P1 from "@/app/assets/piece/ancient/03.png"
+// import H2 from "@/app/assets/piece/ancient/01.png"
+// import H1 from "@/app/assets/piece/ancient/02.png"
+// import P3 from "@/app/assets/piece/ancient/03.png"
+// import P2 from "@/app/assets/piece/ancient/03.png"
+// import P1 from "@/app/assets/piece/ancient/03.png"
 interface BoardInterface {
   roomCode: string;
   player: string;
@@ -40,17 +39,20 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
     pos_x: -1,
     pos_y: -1,
   });
-  const pieceImageMap :{ [key: string]: StaticImageData } = {
-    "A-P1": P1 ,
-    "A-P2": P2,
-    "A-P3": P3,
-    "A-H1": H1,
-    "A-H2": H2,
-    "B-P1": P1,
-    "B-P2": P2,
-    "B-P3": P3,
-    "B-H1": H1,
-    "B-H2": H2,
+  const pieceImageMap: { [key: string]: string } = {
+    "A-P1": "/piece/ancient/03.png",
+    "A-P2": "/piece/ancient/03.png",
+    "A-P3": "/piece/ancient/03.png",
+    "A-H1": "/piece/ancient/02.png",
+    "A-H2": "/piece/ancient/01.png",
+    "B-P1": "/piece/ancient/03.png",
+    "B-P2": "/piece/ancient/03.png",
+    "B-P3": "/piece/ancient/03.png",
+    "B-H1": "/piece/ancient/02.png",
+    "B-H2": "/piece/ancient/01.png",
+  };
+  const loaderProp =({ src }: {src:string})  => {
+    return src;
   }
   const [layout, setLayout] = useState([
     ["", "", "", "", ""],
@@ -149,16 +151,17 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
   if (!boardLoaded) return <div>Failed to fetch Board</div>
   return (
     <>
+    <div className="bg-white/80 mx-auto w-fit">
 
       {layout.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex  justify-center ">
+        <div key={rowIndex} className="flex  justify-center  ">
           {row.map((cell, colIndex) => (
             <div
               key={colIndex}
               data-x={rowIndex}
               data-y={colIndex}
-              className={`border-2 border-white w-24 h-24 text-center flex items-center justify-center flex-row-reverse m-1
-                ${!myTurn && cell[0]==player ? "border-8 border-green-800" : ""}
+              className={` w-24 h-24 text-center flex items-center justify-center flex-row-reverse m-1
+                ${!myTurn && cell[0]==player ? "border-[8px] border-yellow-800" : ""}
                 ${cell === selectedPieceInfo.piece && cell !== ""
                   ? "bg-neutral-500"
                   : ""
@@ -166,14 +169,14 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
                 ${possibleMoveLayout[rowIndex][colIndex] === "*"
                   ? "border-8 border-yellow-700"
                   : possibleMoveLayout[rowIndex][colIndex] === "-1"
-                    ? "border-8 border-red-800"
-                    : ""
+                  ? "border-8 border-red-800"
+                  : ""
                 }
                 ${myTurn && player === cell[0] ? "bg-green-800/70 " : ((rowIndex+colIndex) % 2 === 0 ? "bg-black" : "bg-slate-200")}`}
                 
-              onClick={(e) => {
-                const target = e.target as HTMLElement;
-                console.log(target)
+                onClick={(e) => {
+                  const target = e.target as HTMLElement;
+                  console.log(target)
                 console.log("target.dataset.piece", target.dataset.piece);
                 const content = target.dataset.piece || "";
                 console.log("content", content);
@@ -190,14 +193,14 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
                       }
                     )
                     : handleMovePiece(e, rowIndex, colIndex)
-                )
+                  )
               }
               }
             >
               {cell !== "*" ?
               cell
               && <>
-              <Image src={pieceImageMap[cell]} alt="luffy" width={80} height={80}  data-piece={cell}  data-x={rowIndex}
+              <Image src={pieceImageMap[cell]} alt={cell} width={80} height={80} loader={loaderProp} data-piece={cell}  data-x={rowIndex}
               data-y={colIndex} className={`${cell && myTurn && cell[0]==player && "backdrop-blur-sm"}`} /> 
               </>
                 : ""}
@@ -207,7 +210,8 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
           ))}
         </div>
       ))}
-    </>
+    </div>
+      </>
   );
 };
 
