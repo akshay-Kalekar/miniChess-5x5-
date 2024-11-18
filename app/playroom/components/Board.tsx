@@ -12,7 +12,19 @@ import { setMoveHistory } from "@/lib/features/game/gameSlice";
 import { setOppName } from "@/lib/features/room/roomSlice";
 import moveSound from '@/app/assets/sound/move.mp3';
 import useSound from 'use-sound';
+import Image from "next/image";
+import type { StaticImageData } from 'next/image';
+// import H2 from "@/app/assets/piece/one_piece/05.png"
+// import H1 from "@/app/assets/piece/one_piece/04.png"
+// import P3 from "@/app/assets/piece/one_piece/03.png"
+// import P2 from "@/app/assets/piece/one_piece/02.png"
+// import P1 from "@/app/assets/piece/one_piece/01.png"
 
+import H2 from "@/app/assets/piece/ancient/01.png"
+import H1 from "@/app/assets/piece/ancient/02.png"
+import P3 from "@/app/assets/piece/ancient/03.png"
+import P2 from "@/app/assets/piece/ancient/03.png"
+import P1 from "@/app/assets/piece/ancient/03.png"
 interface BoardInterface {
   roomCode: string;
   player: string;
@@ -28,7 +40,18 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
     pos_x: -1,
     pos_y: -1,
   });
-
+  const pieceImageMap :{ [key: string]: StaticImageData } = {
+    "A-P1": P1 ,
+    "A-P2": P2,
+    "A-P3": P3,
+    "A-H1": H1,
+    "A-H2": H2,
+    "B-P1": P1,
+    "B-P2": P2,
+    "B-P3": P3,
+    "B-H1": H1,
+    "B-H2": H2,
+  }
   const [layout, setLayout] = useState([
     ["", "", "", "", ""],
     ["", "", "", "", ""],
@@ -128,27 +151,32 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
     <>
 
       {layout.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex  justify-center">
+        <div key={rowIndex} className="flex  justify-center ">
           {row.map((cell, colIndex) => (
             <div
               key={colIndex}
               data-x={rowIndex}
               data-y={colIndex}
-              className={`border-2 border-white w-24 h-24 text-center flex items-center justify-center flex-row-reverse
+              className={`border-2 border-white w-24 h-24 text-center flex items-center justify-center flex-row-reverse m-1
+                ${!myTurn && cell[0]==player ? "border-8 border-green-800" : ""}
                 ${cell === selectedPieceInfo.piece && cell !== ""
-                  ? "bg-gray-600"
+                  ? "bg-neutral-500"
                   : ""
                 }
                 ${possibleMoveLayout[rowIndex][colIndex] === "*"
-                  ? "bg-green-300"
+                  ? "border-8 border-yellow-700"
                   : possibleMoveLayout[rowIndex][colIndex] === "-1"
-                    ? "bg-green-300"
+                    ? "border-8 border-red-800"
                     : ""
                 }
-                ${myTurn && player === cell[0] ? "text-green-400" : ""}`}
+                ${myTurn && player === cell[0] ? "bg-green-800/70 " : ((rowIndex+colIndex) % 2 === 0 ? "bg-black" : "bg-slate-200")}`}
+                
               onClick={(e) => {
                 const target = e.target as HTMLElement;
-                const content = target.textContent || "";
+                console.log(target)
+                console.log("target.dataset.piece", target.dataset.piece);
+                const content = target.dataset.piece || "";
+                console.log("content", content);
                 return (
                   selectedPieceInfo.piece === "" || content[0] === player
                     ? selectPiece(
@@ -166,7 +194,15 @@ const Board: FC<BoardInterface> = ({ roomCode, player }) => {
               }
               }
             >
-              {cell !== "*" ? cell : ""}
+              {cell !== "*" ?
+              cell
+              && <>
+              <Image src={pieceImageMap[cell]} alt="luffy" width={80} height={80}  data-piece={cell}  data-x={rowIndex}
+              data-y={colIndex} className={`${cell && myTurn && cell[0]==player && "backdrop-blur-sm"}`} /> 
+              </>
+                : ""}
+
+
             </div>
           ))}
         </div>

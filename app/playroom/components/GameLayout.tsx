@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 import { setOppName, setPlayer, setRoomCode, setUserName } from '@/lib/features/room/roomSlice'
 import Notification from '../../roomComponents/Notification'
 import { Loading } from '@/app/components/Utils'
-import { set } from 'firebase/database'
+
 
 const GameLayout: React.FC = () => {
   const searchParams = useSearchParams();
@@ -71,7 +71,7 @@ const GameLayout: React.FC = () => {
               <div className='hidden sm:block h-full w-4/12 '><MoveHistory /></div>
               <div className='h-full w-8/12'><Board roomCode={roomCode} player={player} /></div>
               <div className='hidden sm:block h-full w-4/12 '><Chat roomCode={roomCode} /></div>
-              <div />
+         <div />
             </div>
             <Information2 />
           </div>
