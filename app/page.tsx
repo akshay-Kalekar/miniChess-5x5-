@@ -1,23 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RoomOption, CodeInput } from "./components/Utils";
+import { motion } from "framer-motion";
+import { message } from 'antd';
+import { initMessageApi } from "./roomComponents/Alerts";
+import { ChessModel } from "./components/ChessModels";
 
 export default function Home() {
+  const [messageApi, contextHolder] = message.useMessage();
   const [buttonOption, setButtonOption] = useState<string>("");
   const [option, setOption] = useState<boolean>(true);
   const [name, setName] = useState<string>('');
-
+  useEffect(()=>{
+    initMessageApi(messageApi);
+  })
   return (
     <div className="hero bg-base-200 min-h-screen p-16">
-      <div className="flex w-full h-full">
+      <div className=' absolute top-4 right-4  z-10'>
+        {contextHolder}
       </div>
-      <div className="hero-content text-center">
+      <div className="flex w-full h-full justify-center gap-16">
+        <div className="w-[50vw]">
+
+      <ChessModel color={"white"}/>
+        </div>
+       
+     
+      <motion.div 
+        className="hero-content text-center w-full justify-start"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        
         <div className="max-w-md p-4">
-          <h1 className="text-6xl font-extrabold">Mini Chess</h1>
-          <p className="py-6 text-4xl font-bold">5 x 5</p>
-          <div className="flex flex-col  gap-6 justify-center items-center h-[20vh]">
-            {/* option work as a toggle b/w two componets all option and on click redirect to single option */}
+          <motion.h1
+            className="text-6xl font-extrabold shadow-white shadow-lg"
+            initial={{ scale: 0.5 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 100 }}
+          >
+            Mini Chess
+          </motion.h1>
+          <motion.p
+            className="py-6 text-7xl font-bold  "
+            whileHover={{ rotate: 10 }}
+            transition={{ type: "spring", stiffness: 200 }}
+          >
+            5 x 5
+          </motion.p>
+          <motion.div
+            className="flex flex-col gap-6 justify-center items-center h-[20vh]"
+            initial={{ y: 0, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            {/* option work as a toggle b/w two components all option and on click redirect to single option */}
             {option ? (
               <RoomOption 
                 setButtonOption={setButtonOption} 
@@ -32,9 +71,10 @@ export default function Home() {
                 name={name}
               />
             )}
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </div>
+  </div>
   );
 }

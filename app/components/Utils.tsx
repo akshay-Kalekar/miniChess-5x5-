@@ -1,5 +1,6 @@
 // import Image from 'next/image'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
+import { motion } from "framer-motion";
 import horseGif from '@/app/assets/dotLottle/horse.lottie'
 
 export const Loading: React.FC = () => {
@@ -19,6 +20,8 @@ export const Loading: React.FC = () => {
 
 import React, { useState } from 'react';
 import { useRouter } from "next/navigation";
+import { error } from '../roomComponents/Alerts';
+import { s } from 'motion/react-client';
 
 type OptionProps = {
   setButtonOption: (option: string) => void;
@@ -28,54 +31,74 @@ type OptionProps = {
 };
 
 export const RoomOption = ({ setButtonOption, setOption, name, setName }: OptionProps) => {
+  const handleOption = (option: string) => {
+    if (name === '') {
+      error('Please enter your name');
+      return;
+    }
+    setButtonOption(option);
+    setOption(false);
+  };
 
   return (
     <>
       <div className="flex gap-6 justify-center flex-wrap w-full pt-16">
-        <div className="join input pr-0 w-4/5 gap-4 border-2 border-slate-200">
-          
+        <div className="join input pr-0 w-4/5 gap-4 border-2 border-slate-200 relative">
           <input
-            className="input-bordered join-item w-full "
-            placeholder="What's your name ?"
+            type="text"
+            id="funky-input"
+            className="
+              px-4 py-2 w-full text-white placeholder-transparent 
+              border-none rounded-lg outline-none
+              transition-all duration-300 ease-in-out
+              peer 
+            "
             onChange={(e) => setName(e.target.value)}
             value={name}
             required
           />
-
+          <motion.label
+            htmlFor="funky-input"
+            className="absolute  px-2 bg-inherit focus:top-1/2 focus:transform focus:-translate-y-1/2 focus:text-gray-400 transition-all duration-300 ease-in-out  peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2
+    peer-placeholder-shown:text-gray-400
+    peer-focus:top-0 peer-focus:text-white peer-focus:text-sm"
+            animate={{
+              top: name !== '' ? 0 : '50%',
+              scale: name !== '' ? 0.9 : 1,
+              y: name !== '' ? '-80%' : '-50%',
+              color: name !== '' ? '#ffffff' : '#a0a0a0',
+            }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+          >
+            Enter Your Name
+          </motion.label>
         </div>
-       
-        
+
         <button
-        className="btn btn-secondary w-1/3"
-        onClick={() => {
-          setButtonOption("Create");
-          setOption(false);
-        }}
+          className="btn btn-secondary w-1/3 hover:shadow-secondary/50 hover:shadow-lg"
+          onClick={() => handleOption('Create')}
         >
           Create Room
         </button>
         <button
-          className="btn btn-info w-1/3"
-          onClick={() => {
-            setButtonOption("Join");
-            setOption(false);
-          }}
-          >
+          className="btn btn-info w-1/3 hover:shadow-info/50 hover:shadow-lg"
+          onClick={() => handleOption('Join')}
+        >
           Join Room
         </button>
-        <button className="btn btn-error w-1/3 "
-          onClick={() => {
-            setButtonOption("Spectate");
-            setOption(false);
-          }}
-        > Spectate </button>
-        <button className="btn btn-warning w-1/3"> Practice Room </button>
-    
-
+        <button
+          className="btn btn-error w-1/3 hover:shadow-error/50 hover:shadow-lg"
+          onClick={() => handleOption('Spectate')}
+        >
+          Spectate
+        </button>
+        <button className="btn btn-warning w-1/3 hover:shadow-warning/50 hover:shadow-lg">
+          Practice Room
+        </button>
       </div>
     </>
-  )
-}
+  );
+};
 
 type CodeInputProps = {
   button: string;

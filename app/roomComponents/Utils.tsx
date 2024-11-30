@@ -119,10 +119,16 @@ interface SelectPieceProps {
     setPossibleMoveLayout: React.Dispatch<React.SetStateAction<Array<Array<string>>>>;
 }
 const selectPiece = ({e, player, myTurn, layout, setSelectedPieceInfo, setPossibleMoveLayout}: SelectPieceProps) => {
+    if(!myTurn) {
+        error("Not Your Turn");
+        return;
+    }
+    
     const target = e.target as HTMLElement;
     const piece = target.dataset.piece;
-    
+
     console.log("piece",piece)
+    
     if ( myTurn && piece && ((player === "A" && piece.startsWith("A")) || (player === "B" && piece.startsWith("B")))) {
         const newSelectedPieceInfo = {
             piece,
