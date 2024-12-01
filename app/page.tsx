@@ -21,14 +21,14 @@ export default function Home() {
         {contextHolder}
       </div>
       <div className="flex w-full h-full justify-center gap-16">
-        <div className="w-[50vw]">
+        <div className="w-[30vw]">
 
-      <ChessModel color={"white"}/>
+      <ChessModel color={"black"}/>
         </div>
        
      
       <motion.div 
-        className="hero-content text-center w-full justify-start"
+        className="hero-content text-center  "
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
@@ -36,7 +36,7 @@ export default function Home() {
         
         <div className="max-w-md p-4">
           <motion.h1
-            className="text-6xl font-extrabold shadow-white shadow-lg"
+            className="text-6xl font-extrabold  "
             initial={{ scale: 0.5 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 100 }}
@@ -74,6 +74,10 @@ export default function Home() {
           </motion.div>
         </div>
       </motion.div>
+      <div className="w-[30vw]">
+
+<ChessModel color={"white"}/>
+  </div>
     </div>
   </div>
   );

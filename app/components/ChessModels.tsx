@@ -18,7 +18,8 @@ export const ChessModel = ({ color }) => {
     const animateRotation = () => {
       if (groupRef.current) {
         // Smooth auto-rotation
-        groupRef.current.rotation.y += 0.001; // Auto-rotate around Y-axis
+
+        groupRef.current.rotation.y += color === 'white' ? 0.001 : -0.001; // Auto-rotate around Y-axis
 
         // Smooth mouse influence
         groupRef.current.rotation.x +=
@@ -64,30 +65,35 @@ export const ChessModel = ({ color }) => {
 };
 
 function BaseKing({ color, groupRef }) {
-  const { nodes, materials } = useGLTF('/chess_peice_3d_model/base_king/white.glb');
+  // Load the appropriate model based on color
+  const gltfPath = color === 'white'
+    ? '/chess_peice_3d_model/base_king/white.glb'
+    : '/chess_peice_3d_model/base_king/black.glb';
+  const { nodes, materials } = useGLTF(gltfPath);
+
   const spring = useSpring({
-    scale: [1.1, 1.1, 1.1], // Slightly scale up for a dynamic look
+    scale: [1.1, 1.1, 1.1],
     config: { tension: 300, friction: 10 },
   });
 
   return (
     <animated.group ref={groupRef} scale={spring.scale} dispose={null} position={[0, 5, 0]}>
-      <mesh geometry={nodes["King"].geometry} rotation={[-0.5,0,0]} castShadow receiveShadow>
-        <meshStandardMaterial roughness={0.17} map={materials["WoodenChessKingSideA"].map} />
+      <mesh geometry={nodes["King"].geometry} rotation={[-0.5, 0, 0]} castShadow receiveShadow>
+        <meshStandardMaterial roughness={0.17} metalness={2} map={materials["WoodenChessKingSideA"].map} />
       </mesh>
       {/* Base */}
       <mesh
         geometry={nodes["Base"].geometry}
         castShadow
         receiveShadow
-        position={[0, -4.5, 0]}
-        scale={0.5}
-        rotation={color === "white" ? [0, -4, 0] : [0, 12, 0]}
+        position={[0, -5.5, 0]}
+        scale={0.4}
+        rotation={color === "white" ? [0, 12, 0] : [0, 4, 0]}
       >
         <meshStandardMaterial
-          metalness={2}
-          roughness={0.17}
-          color={color === "white" ? "#806969" : "black"}
+          metalness={1.5}
+          roughness={0.57}
+          color={color === "white" ? "#FFDEAD" : "#806969"}
         />
       </mesh>
     </animated.group>
@@ -95,3 +101,4 @@ function BaseKing({ color, groupRef }) {
 }
 
 useGLTF.preload('/chess_peice_3d_model/base_king/white.glb');
+useGLTF.preload('/chess_peice_3d_model/base_king/black.glb');
