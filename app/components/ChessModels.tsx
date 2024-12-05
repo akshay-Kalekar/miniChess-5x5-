@@ -20,7 +20,7 @@ export const ChessModel = ({ color }) => {
         // Smooth auto-rotation
 
         groupRef.current.rotation.y += color === 'white' ? 0.001 : -0.001; // Auto-rotate around Y-axis
-
+        groupRef.current.rotation.x += color === 'white' ? 0.001 : -0.001; 
         // Smooth mouse influence
         groupRef.current.rotation.x +=
           (mouseRef.current.y * Math.PI * 0.1 - groupRef.current.rotation.x) * 0.05;
@@ -78,7 +78,7 @@ function BaseKing({ color, groupRef }) {
 
   return (
     <animated.group ref={groupRef} scale={spring.scale} dispose={null} position={[0, 5, 0]}>
-      <mesh geometry={nodes["King"].geometry} rotation={[-0.5, 0, 0]} castShadow receiveShadow>
+      <mesh geometry={nodes["King"].geometry} scale={0.8} rotation={[-0.5, 0, 0]} castShadow receiveShadow>
         <meshStandardMaterial roughness={0.17} metalness={2} map={materials["WoodenChessKingSideA"].map} />
       </mesh>
       {/* Base */}
@@ -87,7 +87,7 @@ function BaseKing({ color, groupRef }) {
         castShadow
         receiveShadow
         position={[0, -5.5, 0]}
-        scale={0.4}
+        scale={0.3}
         rotation={color === "white" ? [0, 12, 0] : [0, 4, 0]}
       >
         <meshStandardMaterial

@@ -21,7 +21,7 @@ export default function Home() {
         {contextHolder}
       </div>
       <div className="flex w-full h-full justify-center gap-16">
-        <div className="w-[30vw]">
+        <div className="absoulte w-[30vw] hidden lg:block">
 
       <ChessModel color={"black"}/>
         </div>
@@ -74,7 +74,7 @@ export default function Home() {
           </motion.div>
         </div>
       </motion.div>
-      <div className="w-[30vw]">
+      <div className="absoulte w-[30vw] hidden md:block">
 
 <ChessModel color={"white"}/>
   </div>
