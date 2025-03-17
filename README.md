@@ -1,16 +1,13 @@
 <a name="readme-top"></a>
 <div align="center">
 
-
-
 # Mini Chess 5x5
 
 In this 5x5 chess variant, players use three distinct pieces: 'P,' which moves one block in any of the four cardinal directions; 'H1,' which moves in a plus pattern, skipping one block; and 'H2,' which moves diagonally, also skipping one block. This simplified yet strategic setup reimagines traditional chess tactics on a smaller board, encouraging fresh, dynamic gameplay.
 
 </div>
 
-
-<div align="center"><h4><a href="#-table-of-contents">️Table of Contents</a> • <a href="#-about-the-project">ℹ️ About the Project</a> • <a href="#-stack-tech">🛠 Stack Tech</a> • <a href="#-setup">⚙ Setup</a> • <a href="#-about-the-author">👨🏻‍ About the Author</a></h4></div>
+<div align="center"><h4><a href="#-table-of-contents">️Table of Contents</a> • <a href="#-about-the-project">ℹ️ About the Project</a> • <a href="#-stack-tech">🛠 Stack Tech</a> • <a href="#-setup">⚙ Setup</a> • <a href="#-things-to-look-out-for">🔍 Things to Look Out For</a> • <a href="#-about-the-author">👨🏻‍ About the Author</a></h4></div>
 
 ## ️Table of Contents
  <details>
@@ -19,6 +16,8 @@ In this 5x5 chess variant, players use three distinct pieces: 'P,' which moves o
 - [Mini Chess 5x5](#mini-chess-5x5)
   - [ℹ️ About the Project](#-about-the-project)
   - [🛠 Stack Tech](#-stack-tech)
+  - [⚙ Setup](#-setup)
+  - [🔍 Things to Look Out For](#-things-to-look-out-for)
   - [👨🏻‍ About the Author](#-about-the-author)
 </details>
 
@@ -30,25 +29,23 @@ Built with Next.js, the project leverages the framework's efficient server-side 
 
 This project exemplifies the integration of modern front-end technologies to create an engaging, multiplayer game with a unique twist on traditional chess mechanics, tailored to a minimalist 5x5 setup.
 
-
-
 ## 🛠 Stack Tech
 - [![Firebase][Firebase-badge]][Firebase-url] - Mobile & web app development platform
 
 [Firebase-badge]: https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase
-[Firebase-url]: }
+[Firebase-url]: 
 - [![Next.js][Next.js-badge]][Next.js-url] - A server-side rendered framework for building React applications
 
 [Next.js-badge]: https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextjs
-[Next.js-url]: }
+[Next.js-url]: 
 - [![TypeScript][TypeScript-badge]][TypeScript-url] - A strict syntactical superset of JavaScript
 
 [TypeScript-badge]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript
-[TypeScript-url]: }
+[TypeScript-url]: 
 - [![Tailwind CSS][Tailwind CSS-badge]][Tailwind CSS-url] - Utility-first CSS framework
 
 [Tailwind CSS-badge]: https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwindcss
-[Tailwind CSS-url]: }
+[Tailwind CSS-url]: 
 
 ## ⚙ Setup
 ### Clone the Repository:
@@ -84,18 +81,24 @@ pnpm dev
 bun dev
 ```
 
-
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## 🔍 Things to Look Out For
+If you're a developer contributing to or modifying this project, keep in mind the following features:
+
+1. **Move Sound Effects** - Each move is accompanied by a sound effect to enhance player engagement.
+2. **Move Suggestions** - The game highlights possible moves for each selected piece, helping players strategize effectively.
+3. **Chat Functionality** - Players can send messages to each other in real-time during a match, enhancing the social aspect of gameplay.
+4. **Move History** - A detailed move history is tracked and can be retracted if needed, providing players with a record of past moves and game progress.
+5. **Wrong Move Alerts** - If a player attempts an invalid move, a pop-up alert notifies them, preventing errors and ensuring smooth gameplay.
+
+Ensure these features are properly tested and functional when making changes to the project.
 
 ## 👨🏻‍ About the Author
 
 **Akshay Ajay Kalekar**
 
-This project was created by Akshay Ajay Kalekar. Connect with me on [GitHub](https://github.com/https://github.com/akshay-Kalekar)  to learn more about my projects and professional background.
-
+This project was created by Akshay Ajay Kalekar. Connect with me on [GitHub](https://github.com/akshay-Kalekar) to learn more about my projects and professional background.
 
 <p align="right"><a href="#readme-top">Top ⬆️</a></p>
-
----
 
