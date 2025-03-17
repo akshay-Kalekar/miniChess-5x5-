@@ -30,22 +30,22 @@ Built with Next.js, the project leverages the framework's efficient server-side 
 This project exemplifies the integration of modern front-end technologies to create an engaging, multiplayer game with a unique twist on traditional chess mechanics, tailored to a minimalist 5x5 setup.
 
 ## 🛠 Stack Tech
-- [![Firebase][Firebase-badge]][Firebase-url] - Mobile & web app development platform
+- ![Firebase][Firebase-badge] - Mobile & web app development platform
 
 [Firebase-badge]: https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase
-[Firebase-url]: 
-- [![Next.js][Next.js-badge]][Next.js-url] - A server-side rendered framework for building React applications
+
+- ![Next.js][Next.js-badge] - A server-side rendered framework for building React applications
 
 [Next.js-badge]: https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextjs
-[Next.js-url]: 
-- [![TypeScript][TypeScript-badge]][TypeScript-url] - A strict syntactical superset of JavaScript
+
+- ![TypeScript][TypeScript-badge] - A strict syntactical superset of JavaScript
 
 [TypeScript-badge]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript
-[TypeScript-url]: 
-- [![Tailwind CSS][Tailwind CSS-badge]][Tailwind CSS-url] - Utility-first CSS framework
+
+- ![Tailwind CSS][Tailwind CSS-badge] - Utility-first CSS framework
 
 [Tailwind CSS-badge]: https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwindcss
-[Tailwind CSS-url]: 
+
 
 ## ⚙ Setup
 ### Clone the Repository:
